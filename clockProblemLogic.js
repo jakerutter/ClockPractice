@@ -194,16 +194,16 @@ function clearUI(){
     //clear green border
     //document.getElementById(id+correctPosition).style.border = "none";
     //clear hidden field and results label
-    document.getElementById("hiddenField").innerHTML = "";
-    document.getElementById("hdnID").innerHTML = "";
-    document.getElementById("resultsLabel").innerHTML = "";
+    clearInnerHtml("hiddenField");
+    clearInnerHtml("hdnID");
+    clearInnerHtml("resultsLabel");
     
     //clear the canvases
     clearCanvas("clockQuestion");
-    clearCanvas("guessCanvas1");
-    clearCanvas("guessCanvas2");
-    clearCanvas("guessCanvas3");
-    clearCanvas("guessCanvas4");
+    clearInnerHtml("guessCanvas1");
+    clearInnerHtml("guessCanvas2");
+    clearInnerHtml("guessCanvas3");
+    clearInnerHtml("guessCanvas4");
     clearCanvas("pickCanvas1");
     clearCanvas("pickCanvas2");
     clearCanvas("pickCanvas3");
@@ -227,4 +227,8 @@ function checkAnswer(input, id){
         document.getElementById(id+correctPosition).classList.add("green-border");
     }
 }
- 
+
+//clear the innerhtml from an item
+function clearInnerHtml(id){
+    document.getElementById(id).innerHTML = "";
+}

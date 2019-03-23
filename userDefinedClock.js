@@ -97,17 +97,10 @@ function clearCanvas(element){
 //DIGITAL CLOCK SECTION
 function getDigitalClock(elementName, hour, minute) {
   var element = document.getElementById(elementName);
-  var graphic = element.getContext("2d");
-  var radius = element.height / 2;
-  var widthByTwo = element.width / 2;
-  graphic.translate(widthByTwo, radius);
-  var hour = hour;
-  var minute = minute;
-  var sec = "00";
-  //ensure minute value is two digits
-  drawDigitalClock(graphic, radius);
-}
-
-function drawDigitalClock(graphic, radius){
-
+  //ensure minute is two digits
+  if (minute == 0){
+    minute = "00"
+  }
+  
+  element.innerHTML = hour + ":" + minute;
 }
