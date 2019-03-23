@@ -1,19 +1,15 @@
+//ANALOG CLOCK SECTION
+function getAnalogClock(elementName, hour, minute){
 
-function getClock(elementName, hour, minute){
+  var element = document.getElementById(elementName);
+  var graphic = element.getContext("2d");
+  var radius = element.height / 2;
+  var widthByTwo = element.width / 2;
+  graphic.translate(widthByTwo, radius);
+  //JTR - want to remove this line if I don't need it
+  // radius = radius * 0.90
 
-//JTR - replaced this with elementName parameter
-// var element = document.getElementById("clock-canvas");
-var element = document.getElementById(elementName);
-var graphic = element.getContext("2d");
-var radius = element.height / 2;
-var widthByTwo = element.width / 2;
-graphic.translate(widthByTwo, radius);
-//JTR - want to remove this line if I don't need it
-// radius = radius * 0.90
-//JTR - do not want time that changes, instead call startClock once
-startClock(graphic, radius, hour, minute);
-// setInterval(startClock, 1000);
-//we are calling startClock every second which makes the clock look like its moving. 
+  startClock(graphic, radius, hour, minute);
 }
 
 function startClock(graphic, radius, hour, minute) {
@@ -96,4 +92,22 @@ function clearCanvas(element){
     canvas.width = canvas.width;
   }
   
+}
+
+//DIGITAL CLOCK SECTION
+function getDigitalClock(elementName, hour, minute) {
+  var element = document.getElementById(elementName);
+  var graphic = element.getContext("2d");
+  var radius = element.height / 2;
+  var widthByTwo = element.width / 2;
+  graphic.translate(widthByTwo, radius);
+  var hour = hour;
+  var minute = minute;
+  var sec = "00";
+  //ensure minute value is two digits
+  drawDigitalClock(graphic, radius);
+}
+
+function drawDigitalClock(graphic, radius){
+
 }

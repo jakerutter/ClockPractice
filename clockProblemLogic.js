@@ -8,9 +8,7 @@ function getClockProblem(){
     //get question format
     // 1) what time does this clock show ? (answer will be digital clock style)
     // 2) which clock shows x' oClock ? (answer will be clicking on one of 4 clocks)
-    var questionFormat = getRandomInt(0, 2);
-    questionFormat = (questionFormat == 0 ? "guessTime" : "pickClock");
-    clockProblem.format = questionFormat;
+    getQuestionFormat(clockProblem);
     testClockProblemQuestionFormat(clockProblem);
 
     //get the hour, minute, and text of the problem
@@ -35,6 +33,14 @@ function ClockProblem(hours, minutes, time, question, format, slang, correctPosi
     this.slang = slang;
     this.correctPosition = correctPosition;
     this.notAnswerArray = notAnswerArray;
+}
+
+//gets either "guessTime" or "pickClock" as game types and hydrates clockProblem.format
+function getQuestionFormat(clockProblem){
+    var questionFormat = getRandomInt(0, 2);
+    questionFormat = (questionFormat == 0 ? "guessTime" : "pickClock");
+    clockProblem.format = questionFormat;
+    return clockProblem;
 }
 
 function createQuestionWithFormat(clockProblem) {
@@ -151,21 +157,24 @@ function setUI(clockProblem){
 function drawAnalogClocks(clockProblem){
     //what time does this clock show? (need 1 analog clock for the question clock, 4 digital for answers)
     if (clockProblem.format == "guessTime"){
-        getClock('clockQuestion', clockProblem.hour, clockProblem.minute);
+        getAnalogClock('clockQuestion', clockProblem.hour, clockProblem.minute);
     }
     //which clock shows x o'Clocl? (need 4 analog clocks)
     else if (clockProblem.format == "pickClock"){
-        getClock('pickCanvas'+clockProblem.correctPosition, clockProblem.hour, clockProblem.minute);
-        getClock('pickCanvas'+clockProblem.notAnswerArray[0], getRandomInt(1, 12), getMinute());
-        getClock('pickCanvas'+clockProblem.notAnswerArray[1], getRandomInt(1, 12), getMinute());
-        getClock('pickCanvas'+clockProblem.notAnswerArray[2], getRandomInt(1, 12), getMinute());
+        getAnalogClock('pickCanvas'+clockProblem.correctPosition, clockProblem.hour, clockProblem.minute);
+        getAnalogClock('pickCanvas'+clockProblem.notAnswerArray[0], getRandomInt(1, 12), getMinute());
+        getAnalogClock('pickCanvas'+clockProblem.notAnswerArray[1], getRandomInt(1, 12), getMinute());
+        getAnalogClock('pickCanvas'+clockProblem.notAnswerArray[2], getRandomInt(1, 12), getMinute());
     }
     
 }
 
 //get the digital clock displays
 function drawDigitalClocks(clockProblem){
-
+    getDigitalClock('guessCanvas'+clockProblem.correctPosition, clockProblem.hour, clockProblem.minute);
+    getDigitalClock('guessCanvas'+clockProblem.notAnswerArray[0], getRandomInt(1, 12), getMinute());
+    getDigitalClock('guessCanvas'+clockProblem.notAnswerArray[1], getRandomInt(1, 12), getMinute());
+    getDigitalClock('guessCanvas'+clockProblem.notAnswerArray[2], getRandomInt(1, 12), getMinute());
 }
 
 function clearUI(){
