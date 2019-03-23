@@ -162,9 +162,9 @@ function drawAnalogClocks(clockProblem){
     //which clock shows x o'Clocl? (need 4 analog clocks)
     else if (clockProblem.format == "pickClock"){
         getAnalogClock('pickCanvas'+clockProblem.correctPosition, clockProblem.hour, clockProblem.minute);
-        getAnalogClock('pickCanvas'+clockProblem.notAnswerArray[0], getRandomInt(1, 12), getMinute());
-        getAnalogClock('pickCanvas'+clockProblem.notAnswerArray[1], getRandomInt(1, 12), getMinute());
-        getAnalogClock('pickCanvas'+clockProblem.notAnswerArray[2], getRandomInt(1, 12), getMinute());
+        getAnalogClock('pickCanvas'+clockProblem.notAnswerArray[0], getRandomIntWithException(1, 12, clockProblem.hour), getMinute());
+        getAnalogClock('pickCanvas'+clockProblem.notAnswerArray[1], getRandomIntWithException(1, 12, clockProblem.hour), getMinute());
+        getAnalogClock('pickCanvas'+clockProblem.notAnswerArray[2], getRandomIntWithException(1, 12, clockProblem.hour), getMinute());
     }
     
 }
@@ -172,9 +172,9 @@ function drawAnalogClocks(clockProblem){
 //get the digital clock displays
 function drawDigitalClocks(clockProblem){
     getDigitalClock('guessCanvas'+clockProblem.correctPosition, clockProblem.hour, clockProblem.minute);
-    getDigitalClock('guessCanvas'+clockProblem.notAnswerArray[0], getRandomInt(1, 12), getMinute());
-    getDigitalClock('guessCanvas'+clockProblem.notAnswerArray[1], getRandomInt(1, 12), getMinute());
-    getDigitalClock('guessCanvas'+clockProblem.notAnswerArray[2], getRandomInt(1, 12), getMinute());
+    getDigitalClock('guessCanvas'+clockProblem.notAnswerArray[0], getRandomIntWithException(1, 12, clockProblem.hour), getMinute());
+    getDigitalClock('guessCanvas'+clockProblem.notAnswerArray[1], getRandomIntWithException(1, 12, clockProblem.hour), getMinute());
+    getDigitalClock('guessCanvas'+clockProblem.notAnswerArray[2], getRandomIntWithException(1, 12, clockProblem.hour), getMinute());
 }
 
 function clearUI(){

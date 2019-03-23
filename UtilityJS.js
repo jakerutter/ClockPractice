@@ -33,7 +33,20 @@ function getRandomInt(min, max) {
     min = Number(min);
     max = Number(max);
     var randomInt;
-    randomInt = Math.floor(Math.random() * max) + min  
+    randomInt = Math.floor(Math.random() * max) + min; 
+    return randomInt;
+}
+
+//The max and min are inclusive. Will never return the value of the exception
+function getRandomIntWithException(min, max, exception){
+    min = Number(min);
+    max = Number(max);
+    var randomInt;
+    randomInt = Math.floor(Math.random() * max) + min;
+
+    while (randomInt == exception){
+        randomInt = Math.floor(Math.random() * max) + min;
+    }
     return randomInt;
 }
 
