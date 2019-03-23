@@ -12,11 +12,11 @@
 }
 
 .analogClock{
-    width: 20em;
+    /* width: 20em; */
 }
 
 .digitalClock{
-    width: 20em;
+    /* width: 20em; */
 }
 
 .analogClockButton{
@@ -25,6 +25,7 @@
 
 .digitalClockButton{
     background-color: transparent;
+    width: 10em;
 }
 
 .analogClockButton:hover{
@@ -158,72 +159,6 @@
 	top:1px;
 }
 
-.lane {
-    display: inline-block;
-    vertical-align: top;
-    height: auto;
-}
-
-.statWrapper{
-    width: 18em;
-    margin: auto;
-}
-
-#gameWrapper{
-    display: inline-block;
-    /* width: 50em; */
-    margin: auto;
-}
-
-.row {
-  display: inline-block;
-  /* width: 50em; */
-  height: 10em;
-}
-
-.miniRow {
-  display: inline-block;
-  margin:auto;
-  height: 2em;
-
-}
-
-.cell {
-  display: inline-block;
-  width: 30%;
-  max-width: 10em;
-  height: 10em;
-  text-align: center;
-  vertical-align: middle;
-  opacity: 1;
-}
-
-.question {
-    color: blue;
-    font-size: 1em;
-    opacity: 1;
-}
-
-.questionButton{
-    height: 10em;
-    width: 10em;
-    font-size: 1em;
-    font-weight: bold;
-}
-
-.answerOption {
-    background-color: mediumaquamarine;
-    color: black;
-    font-size: 1em;
-    font-weight: bold;
-    opacity: 1;
-}
-
-.answerOption:hover {
-    background-color: lightslategray;
-    font-weight: bold;
-}
-
 .hidden {
     display: none;
 }
@@ -232,31 +167,11 @@
     z-index: -1 !important;
 }
 
-.correctAnswer {
-    background-color: green;
-    
-}
-
-.wrongAnswer {
-    background-color: red;
-    
-}
-
-.headTitle {
-    text-align: center;
-    width: 100%;
-    padding-bottom: .25em;
-    
-}
 
 .statTitle {
     text-align: center;
 }
 
-.statPlaceholder {
-    padding-top: .75em;
-    font-size: 1.5em;
-}
 
 .statPlaceholderText{
     padding-top: 1em;
@@ -273,12 +188,6 @@
 .radioButton {
     text-align: left;
 }
-
-#currentGoal {
-    font-size: 1.5em;
-    margin-top: -.25em;
-}
-
 
 .modal {
     width: 450px;
@@ -328,122 +237,10 @@ input[type=text]:focus {
     top: 0; left: 0; bottom: 0; right: 0;
   }
 
-.center1 {
-    margin: auto;
-    position: absolute;
-    top: -255px; left: -255px; bottom: 0; right: 0;
-}
 
-.center2 {
-    margin: auto;
-    position: absolute;
-    top: -255px; left: 255px; bottom: 0; right: 0;
-}
-
-.center3 {
-    margin: auto;
-    position: absolute;
-    top: 255px; left: -255px; bottom: 0; right: 0;
-}
-
-.center4 {
-    margin: auto;
-    position: absolute;
-    top: 255px; left: 255px; bottom: 0; right: 0;
-}
-.answer1{
-    margin: auto;
-    position: absolute;
-    top: -500px; left: -500px; bottom: 0; right: 0;
-}
-.answer2{
-    margin: auto;
-    position: absolute;
-    top: -500px; left: 0; bottom: 0; right: 0;
-}
-.answer3{
-    margin: auto;
-    position: absolute;
-    top: -500px; left: 500px; bottom: 0; right: 0;
-}
-.answer4{
-    margin: auto;
-    position: absolute;
-    top: 0px; left: -500px; bottom: 0; right: 0;
-}
-.answer5{
-    margin: auto;
-    position: absolute;
-    top: 0px; left: 755px; bottom: 0; right: 0;
-}
-.answer6{
-    margin: auto;
-    position: absolute;
-    top: 755px; left: -500px; bottom: 0; right: 0;
-}
-.answer7{
-    margin: auto;
-    position: absolute;
-    top: 755px; left: 0; bottom: 0; right: 0;
-}
-.answer8{
-    margin: auto;
-    position: absolute;
-    top: -755px; left: -500px; bottom: 0; right: 0;
-}
-.goalRadio {
-    text-align: center;
-}
-
-#confirmGoal {
-    background-color: white;
-    border-radius: 1px;
-}
-
-#simplemodal-overlay {
-    opacity: 1;
-}
-
-#simplemodal-container {
-    opacity: 1;
-}
-
-.doingGood {
-    color: white; 
-}
-
-.doingFair {
-    color: black;
-}
-
-.doingPoor {
-    color: white;
-}
-
-.finishedGood {
-    background-color: green;
-    color: white;
-}
-
-.finishedFair {
-    background-color: black;
-    color: white;
-}
-
-.finishedPoor {
-    background-color: red;
-    color: black;
-}
-
-.reviewProblems {
-    text-align: left;
-    display: inline-block;
-    margin-left: 20px;
-    margin-right: 20px;
-    font-size: 18px;
-}
 .grid {
     width: 100%;
+    margin:auto;
 }
 [class*='col-'] {
     float: left;
@@ -492,98 +289,4 @@ input[type=text]:focus {
   [class*='col-']:last-of-type {
     padding-right: 0;
   }
-  .above30Seconds{
-    color: green;
-  }
-.above15Seconds{
-    color: rgb(255, 217, 0);
-}
-.below15Seconds{
-    color: red;
-}
-#standingHighScore{
-    font-size: 1.5em;
-}
-.whiteOut{
-    background-color: white;
-}
-.sliderRangeNumbers{
-    border:0; 
-    color:#a04de3; 
-    font-weight:bold; 
-    text-align:center;
-    font-size:1.6em;
-    background-color:#BADA55;
-    width:200px;
-}
-.divStats{
-    position: absolute;
-    margin-top:5%;
-    margin-left:70%;
-    border:0; 
-    color:#a04de3;  
-    text-align:center;
-    width:400px;
-}
-.divStatHeader{
-    font-weight:bold;
-    color:#a04de3;  
-    text-align:center;
-    font-size:2em;
-    width:400px;
-}
-.statDetails{
-    font-size: 1.2em;
-    margin-top:3em;
-}
-.sliderLabel{
-    font-size: 1.2em;
-}
-.timesTableNumbers{
-    border:0;
-    border-radius: 5px;
-    color:#a04de3; 
-    font-weight:bold; 
-    text-align:center;
-    font-size:1.4em;
-    background-color:white;
-    width:60px;
-}
-.questionDisplay{
-    border:0; 
-    color:#a04de3; 
-    font-weight:bold; 
-    text-align:right;
-    font-size:1.2em;
-    background-color:#BADA55;
-    width:120px;
-}
-.wordQuestionDisplay{
-    border:0; 
-    color:#a04de3; 
-    font-weight:bold; 
-    text-align:center;
-    font-size:1.2em;
-    background-color:#BADA55;
-    width:400px;
-    height: 200px;
-}
-.answerDisplay {
-    border:0; 
-    color:#a04de3; 
-    font-weight:bold; 
-    text-align:left;
-    font-size:1.2em;
-    background-color:#BADA55;
-    width:80px;
-}
-.answerInput{
-    border:0;
-    border-radius: 5px;
-    color:#a04de3; 
-    font-weight:bold; 
-    text-align:center;
-    font-size:1.1em;
-    background-color:white;
-    width:100px;
-}
+  
