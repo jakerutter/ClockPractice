@@ -7,6 +7,10 @@
     text-align: center;
 }
 
+.green-border{
+    border: 5px solid green
+}
+
 .analogClock{
     width: 20em;
 }
@@ -21,6 +25,14 @@
 
 .digitalClockButton{
     background-color: transparent;
+}
+
+.analogClockButton:hover{
+    cursor:pointer;
+}
+
+.digitalClockButton:hover{
+    cursor:pointer;
 }
 
 .analogClockQuestion{

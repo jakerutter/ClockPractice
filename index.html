@@ -19,25 +19,25 @@
             <canvas id="clockQuestion" class="analogClockQuestion"></canvas>
             <h4 id="guessTimeText" class="questionText"></h4>
             <div>
-                <button id="guess1" class="digitalClockButton" onclick="checkAnswer('1');"><span><canvas id="guessCanvas1" class="digitalClock"></canvas></span></button>
-                <button id="guess2" class="digitalClockButton" onclick="checkAnswer('2');"><span><canvas id="guessCanvas2" class="digitalClock"></canvas></span></button>
-                <button id="guess3" class="digitalClockButton" onclick="checkAnswer('3');"><span><canvas id="guessCanvas3" class="digitalClock"></canvas></span></button>
-                <button id="guess4" class="digitalClockButton" onclick="checkAnswer('4');"><span><canvas id="guessCanvas4" class="digitalClock"></canvas></span></button>
+                <button id="guess1" class="digitalClockButton" onclick="checkAnswer('1', 'guess');"><span><canvas id="guessCanvas1" class="digitalClock"></canvas></span></button>
+                <button id="guess2" class="digitalClockButton" onclick="checkAnswer('2', 'guess');"><span><canvas id="guessCanvas2" class="digitalClock"></canvas></span></button>
+                <button id="guess3" class="digitalClockButton" onclick="checkAnswer('3', 'guess');"><span><canvas id="guessCanvas3" class="digitalClock"></canvas></span></button>
+                <button id="guess4" class="digitalClockButton" onclick="checkAnswer('4', 'guess');"><span><canvas id="guessCanvas4" class="digitalClock"></canvas></span></button>
             </div>
         </div>
         <!-- This div should have 4 analog clocks as answer options -->
         <div id="pickClock" class="hidden">
             <h4 id="pickClockText" class="questionText"></h4>
 
-            <button id="pick1" class="analogClockButton" onclick="checkAnswer('1');"><span><canvas id="pickCanvas1" class="analogClock"></canvas></span></button>
-            <button id="pick2" class="analogClockButton" onclick="checkAnswer('2');"><span><canvas id="pickCanvas2" class="analogClock"></canvas></span></button>
-            <button id="pick3" class="analogClockButton" onclick="checkAnswer('3');"><span><canvas id="pickCanvas3" class="analogClock"></canvas></span></button>
-            <button id="pick4" class="analogClockButton" onclick="checkAnswer('4');"><span><canvas id="pickCanvas4" class="analogClock"></canvas></span></button>
+            <button id="pick1" class="analogClockButton" onclick="checkAnswer('1', 'pick');"><span><canvas id="pickCanvas1" class="analogClock"></canvas></span></button>
+            <button id="pick2" class="analogClockButton" onclick="checkAnswer('2', 'pick');"><span><canvas id="pickCanvas2" class="analogClock"></canvas></span></button>
+            <button id="pick3" class="analogClockButton" onclick="checkAnswer('3', 'pick');"><span><canvas id="pickCanvas3" class="analogClock"></canvas></span></button>
+            <button id="pick4" class="analogClockButton" onclick="checkAnswer('4', 'pick');"><span><canvas id="pickCanvas4" class="analogClock"></canvas></span></button>
         </div>
         
-
+        <h2 id="resultsLabel" class="headTitle"></h2>
         
 </body>
-
+<div id="hdnID" class="hidden"></div>
 <div id="hiddenField" class="hidden"></hidden>
 </html>

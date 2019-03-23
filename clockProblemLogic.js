@@ -69,13 +69,13 @@ function getSlangTerm(clockProblem){
         slang = "o'clock";
     }
     if (minute == 15){
-        slang = "quarter after";
+        slang = "a quarter after";
     }
     if (minute == 30){
         slang = "half past";
     }
     if (minute == 45){
-        slang = "quarter til";
+        slang = "a quarter til";
     }
 
     clockProblem.slangTerm = slang;
@@ -168,9 +168,28 @@ function drawDigitalClocks(clockProblem){
 
 }
 
-//clear the canvases
 function clearUI(){
+    //get id and correctPosition to clear the green border if present
+    if (document.getElementById("hdnID")){
+        var id = document.getElementById("hdnID").innerHTML;
+        if (document.getElementById("hiddenField")){
+            var correctPosition = document.getElementById("hiddenField").innerHTML;
+            if(document.getElementById(id+correctPosition)){
+                document.getElementById(id+correctPosition).classList.remove("green-border");
+            }
+        }
+    }
+
+    // var id = document.getElementById("hdnID").innerHTML;
+    // var correctPosition = document.getElementById("hiddenField").innerHTML;
+    //clear green border
+    //document.getElementById(id+correctPosition).style.border = "none";
+    //clear hidden field and results label
     document.getElementById("hiddenField").innerHTML = "";
+    document.getElementById("hdnID").innerHTML = "";
+    document.getElementById("resultsLabel").innerHTML = "";
+    
+    //clear the canvases
     clearCanvas("clockQuestion");
     clearCanvas("guessCanvas1");
     clearCanvas("guessCanvas2");
@@ -187,12 +206,16 @@ function clearUI(){
 }
 
 //check the user's input versus the correct answer
-function checkAnswer(input){
+function checkAnswer(input, id){
+    document.getElementById("hdnID").innerHTML = id;
     var correctPosition = document.getElementById("hiddenField").innerHTML;
     if (input == correctPosition) {
         console.log('You got it correct.');
+        document.getElementById("resultsLabel").innerHTML = "Correct!";
     } else {
         console.log('Incorrect. Log this as a missed question.');
+        document.getElementById("resultsLabel").innerHTML = "Nope, that wasn't the right choice.";
+        document.getElementById(id+correctPosition).classList.add("green-border");
     }
 }
  
