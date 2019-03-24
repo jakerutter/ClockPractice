@@ -1,10 +1,17 @@
 //TESTS
 
-//test the clock problem question format (that it has one of the two options)
+//test the clock problem question format (that it has one of the three options)
 function testClockProblemQuestionFormat(clockProblem){
-    if ((clockProblem.format != "guessTime") && (clockProblem.format != "pickClock")) {
-        console.log('Current value for format is ' + clockProblem.format);
-        alert('Failed test. Clock problem format is invalid. Error 4.');
+    if (clockProblem.format != "guessTime") {
+
+        if (clockProblem.format != "pickClock") {
+
+            if (clockProblem.format != "guessText") {
+
+              console.log('Current value for format is ' + clockProblem.format);
+              alert('Failed test. Clock problem format is invalid. Error 4.');  
+            }
+        }
     } else {
         console.log('Passed clock problem format test.');
     }

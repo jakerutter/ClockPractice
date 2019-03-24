@@ -37,8 +37,8 @@ function ClockProblem(hours, minutes, time, question, format, slang, correctPosi
 
 //gets either "guessTime" or "pickClock" as game types and hydrates clockProblem.format
 function getQuestionFormat(clockProblem){
-    var questionFormat = getRandomInt(0, 2);
-    questionFormat = (questionFormat == 0 ? "guessTime" : "pickClock");
+    var questionFormat = getRandomInt(0, 3);
+    questionFormat = (questionFormat == 0 ? "guessTime" : (questionFormat == 1 ? "pickClock" : "guessText"));
     clockProblem.format = questionFormat;
     return clockProblem;
 }
@@ -62,8 +62,27 @@ function createQuestionWithFormat(clockProblem) {
 //will add %5 options later
 function getMinute(){
     var minuteArray = [0, 15, 30, 45];
-    var minute = minuteArray[getRandomInt(0,3)];
+    var minute = minuteArray[getRandomInt(0,4)];
     return minute;
+}
+
+function getMinuteInEnglish(minute){
+    var minuteText;
+    if (minute == 0){
+        minuteText = "o'clock";
+    } else if (minute == 15){
+        minuteText = "fifteen";
+    } else if (minute == 30){
+        minuteText = "thirty";
+    } else if (minute == 45){
+        minuteText = "forty-five";
+    } else {
+        console.log('Error encountered. Get minute in english conversion failed. Error 7.');
+        console.log(minute + "<--- that is minute");
+        alert('Error 7');
+    }
+    
+    return minuteText;
 }
 
 //get the slang term
@@ -91,7 +110,7 @@ function getSlangTerm(clockProblem){
 //get the question text (what time does this clock show?)
 function getClockQuestionText(clockProblem){
     //what time does this clock show ? (answer will be digital clock style)
-    if (clockProblem.format == "guessTime"){
+    if ((clockProblem.format == "guessTime") || (clockProblem.format == "guessText")){
         clockProblem.question = "What time is shown?";
     }
     //which clock shows x' oClock ? (answer will be clicking on one of 4 clocks)
@@ -131,7 +150,6 @@ function getCorrectAnswerPosition(clockProblem){
 
 //set the appropriate UI elements, clear or hide the others
 function setUI(clockProblem){
-    console.log(clockProblem.question);
 
     clearUI();
     
@@ -146,11 +164,16 @@ function setUI(clockProblem){
         drawDigitalClocks(clockProblem);
         document.getElementById("guessTime").classList.remove("hidden");
         document.getElementById("guessTimeText").innerText = clockProblem.question;
-    } else {
+    //unhide pickClock div
+    } else if (clockProblem.format == "pickClock") {
         document.getElementById("pickClock").classList.remove("hidden");
         document.getElementById("pickClockText").innerText = clockProblem.question;
+    } else {
+    //unhide guessText div
+        document.getElementById("guessText").classList.remove("hidden");
+        getTextAnswers(clockProblem);
+        document.getElementById("guessTextText").innerText = clockProblem.question;
     }
-
 }
 
 //get the analog clock displays
@@ -159,12 +182,16 @@ function drawAnalogClocks(clockProblem){
     if (clockProblem.format == "guessTime"){
         getAnalogClock('clockQuestion', clockProblem.hour, clockProblem.minute);
     }
-    //which clock shows x o'Clocl? (need 4 analog clocks)
+    //which clock shows x o'Clock? (need 4 analog clocks)
     else if (clockProblem.format == "pickClock"){
         getAnalogClock('pickCanvas'+clockProblem.correctPosition, clockProblem.hour, clockProblem.minute);
         getAnalogClock('pickCanvas'+clockProblem.notAnswerArray[0], getRandomIntWithException(1, 12, clockProblem.hour), getMinute());
         getAnalogClock('pickCanvas'+clockProblem.notAnswerArray[1], getRandomIntWithException(1, 12, clockProblem.hour), getMinute());
         getAnalogClock('pickCanvas'+clockProblem.notAnswerArray[2], getRandomIntWithException(1, 12, clockProblem.hour), getMinute());
+    } else {
+        //need 1 analog clock for question clock. 4 text times for answers
+        getAnalogClock("clockQuestion2", clockProblem.hour, clockProblem.minute);
+        
     }
     
 }
@@ -189,10 +216,6 @@ function clearUI(){
         }
     }
 
-    // var id = document.getElementById("hdnID").innerHTML;
-    // var correctPosition = document.getElementById("hiddenField").innerHTML;
-    //clear green border
-    //document.getElementById(id+correctPosition).style.border = "none";
     //clear hidden field and results label
     clearInnerHtml("hiddenField");
     clearInnerHtml("hdnID");
@@ -200,10 +223,15 @@ function clearUI(){
     
     //clear the canvases
     clearCanvas("clockQuestion");
+    clearCanvas("clockQuestion2");
     clearInnerHtml("guessCanvas1");
     clearInnerHtml("guessCanvas2");
     clearInnerHtml("guessCanvas3");
     clearInnerHtml("guessCanvas4");
+    clearInnerHtml("text1");
+    clearInnerHtml("text2");
+    clearInnerHtml("text3");
+    clearInnerHtml("text4");
     clearCanvas("pickCanvas1");
     clearCanvas("pickCanvas2");
     clearCanvas("pickCanvas3");
@@ -212,6 +240,7 @@ function clearUI(){
     //hide both UI divs
     document.getElementById("guessTime").classList.add("hidden");
     document.getElementById("pickClock").classList.add("hidden");
+    document.getElementById("guessText").classList.add("hidden");
 }
 
 //check the user's input versus the correct answer
@@ -231,4 +260,82 @@ function checkAnswer(input, id){
 //clear the innerhtml from an item
 function clearInnerHtml(id){
     document.getElementById(id).innerHTML = "";
+}
+
+function getTextAnswers(clockProblem){
+    document.getElementById("text"+clockProblem.correctPosition).innerHTML = getCorrectAnswerText(clockProblem);
+    document.getElementById("text"+clockProblem.notAnswerArray[0]).innerHTML = getTextForWrongAnswers(clockProblem);
+    document.getElementById("text"+clockProblem.notAnswerArray[1]).innerHTML = getTextForWrongAnswers(clockProblem);
+    document.getElementById("text"+clockProblem.notAnswerArray[2]).innerHTML = getTextForWrongAnswers(clockProblem);
+        
+}
+
+function getCorrectAnswerText(clockProblem){
+    var answerText = getHourInEnglish(clockProblem.hour) + " " + getMinuteInEnglish(clockProblem.minute);
+    return answerText;
+}
+
+function getTextForWrongAnswers(clockProblem){
+    var answerText;
+    var randomInt = getRandomInt(0, 2);
+    //going to allow the same hour but enforce different minutes
+    if (randomInt == 0) {
+        var hour = getRandomInt(1,12)
+        hour = getHourInEnglish(hour);
+        var minute = getRandomMinuteWithException(clockProblem.minute);
+        answerText = hour + " " + minute;
+    //going to allow same minute but different hour
+    } else {
+        var hour = getRandomIntWithException(1, 12, clockProblem.hour);
+        hour = getHourInEnglish(hour);
+        var minute = getMinute();
+        minute = getMinuteInEnglish(minute);
+        answerText = hour + " " + minute;
+    }
+    return answerText;
+}
+
+function getHourInEnglish(hour){
+    var hourText;
+    if (hour == 1){
+        hourText = "One";
+    } else if (hour == 2){
+        hourText = "Two";
+    } else if (hour == 3){
+        hourText = "Three";
+    } else if (hour == 4){
+        hourText = "Four";
+    } else if (hour == 5){
+        hourText = "Five";
+    } else if (hour == 6){
+        hourText = "Six";
+    } else if (hour == 7){
+        hourText = "Seven";
+    } else if (hour == 8){
+        hourText = "Eight";
+    } else if (hour == 9){
+        hourText = "Nine";
+    } else if (hour == 10){
+        hourText = "Ten";
+    } else if (hour == 11){
+        hourText = "Eleven";
+    } else if (hour == 12){
+        hourText = "Twelve";
+    } else{
+        console.log("Error encountered. Hour to english conversion failed. Error 6.");
+        alert("Error 6.");
+    }
+
+    return hourText;
+}
+
+//Get minute that doesn't match the correct minute
+function getRandomMinuteWithException(minute){
+    //create array off all possible minutes
+    var minuteArray = [0, 15, 30, 45];
+    //remove the correct minute
+    removeItemFromArrayByValue(minuteArray, minute);
+    //get english version of the randomly selected minute
+    var minuteText = getMinuteInEnglish(minuteArray[getRandomInt(0,minuteArray.length-1)]);
+    return minuteText;
 }
