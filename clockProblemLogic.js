@@ -126,7 +126,12 @@ function getClockQuestionText(clockProblem){
             questionText = "Which clock shows " + clockProblem.slangTerm + " " + clockProblem.hour + "?";
         }
         else if (clockProblem.minute == 45){
-            questionText = "Which clock shows " + clockProblem.slangTerm + " " + Number(clockProblem.hour+1) + "?";
+            if (clockProblem.hour != 12){
+                questionText = "Which clock shows " + clockProblem.slangTerm + " " + Number(clockProblem.hour+1) + "?";
+            } else {
+                questionText = "Which clock shows " + clockProblem.slangTerm + " 1?";
+            }
+            
         }
 
         clockProblem.question = questionText;
@@ -336,6 +341,6 @@ function getRandomMinuteWithException(minute){
     //remove the correct minute
     removeItemFromArrayByValue(minuteArray, minute);
     //get english version of the randomly selected minute
-    var minuteText = getMinuteInEnglish(minuteArray[getRandomInt(0,minuteArray.length-1)]);
+    var minuteText = getMinuteInEnglish(minuteArray[getRandomInt(0,minuteArray.length)]);
     return minuteText;
 }
