@@ -20,7 +20,8 @@ function getClockProblem(){
 
     //set UI
     setUI(clockProblem);
-    
+    //hide "Lets Practice button"
+    document.getElementById("letsPracticeBtn").classList.add("hidden");
 }
 
 //create empty clock problem
@@ -255,6 +256,7 @@ function checkAnswer(input, id){
     if (input == correctPosition) {
         console.log('You got it correct.');
         document.getElementById("resultsLabel").innerHTML = "Correct!";
+        setTimeout(getClockProblem, 1000);
     } else {
         console.log('Incorrect. Log this as a missed question.');
         document.getElementById("resultsLabel").innerHTML = "Nope, that wasn't the right choice.";
