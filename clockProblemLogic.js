@@ -59,24 +59,39 @@ function createQuestionWithFormat(clockProblem) {
     return clockProblem;
 }
 
-//get the minutes. for now the options are 0, 15, 30, 45
-//will add %5 options later
+//get the minutes. the options are 0 to 60 in 5 min increments
 function getMinute(){
-    var minuteArray = [0, 15, 30, 45];
+    var minuteArray = [00,05,10,15,20,25,30,35,40,45,50,55];
     var minute = minuteArray[getRandomInt(0,4)];
     return minute;
 }
 
 function getMinuteInEnglish(minute){
     var minuteText;
-    if (minute == 0){
+    if (minute == 00){
         minuteText = "o'clock";
+    } else if (minute == 05){
+        minuteText = "o' five";
+    } else if (minute == 10){
+        minuteText = "ten";
     } else if (minute == 15){
         minuteText = "fifteen";
+    } else if (minute == 20){
+        minuteText = "twenty";
+    } else if (minute == 25){
+        minuteText = "twenty-five";
     } else if (minute == 30){
         minuteText = "thirty";
+    } else if (minute == 35){
+        minuteText = "thirty-five";
+    } else if (minute == 40){
+        minuteText = "forty";
     } else if (minute == 45){
         minuteText = "forty-five";
+    } else if (minute == 50){
+        minuteText = "fifty";
+    } else if (minute == 55){
+        minuteText = "fifty-five";
     } else {
         console.log('Error encountered. Get minute in english conversion failed. Error 7.');
         console.log(minute + "<--- that is minute");
@@ -91,17 +106,30 @@ function getSlangTerm(clockProblem){
     var minute = clockProblem.minute;
     var slang;
 
-    if (minute == 0){
+    if (minute == 00){
         slang = "o'clock";
-    }
-    if (minute == 15){
+    } else if (minute == 05){ 
+        slang = "five after";
+    } else if (minute == 10){
+        slang = "ten after";
+    } else if (minute == 15){
         slang = "a quarter after";
-    }
-    if (minute == 30){
+    } else if (minute == 20){
+        slang = "twenty after"
+    } else if (mniute ==25){
+        slang = "twent-five after"
+    } else if (minute == 30){
         slang = "half past";
-    }
-    if (minute == 45){
+    } else if (minute == 35){
+        slang = "twenty-five til";
+    } else if (minute == 40){
+        slang = "twenty til";
+    } else if (minute == 45){
         slang = "a quarter til";
+    } else if (minute == 50){
+        slang = "ten til";
+    } else if (minute == 55){
+        slang = "five til";
     }
 
     clockProblem.slangTerm = slang;
@@ -116,23 +144,26 @@ function getClockQuestionText(clockProblem){
     }
     //which clock shows x' oClock ? (answer will be clicking on one of 4 clocks)
     else if (clockProblem.format == "pickClock"){
-        var questionText;
-        if (clockProblem.minute == 0){
-           questionText = "Which clock shows " + clockProblem.hour + " " + clockProblem.slangTerm + "?";
-        }
-        else if (clockProblem.minute == 15){
-            questionText = "Which clock shows " + clockProblem.slangTerm + " " + clockProblem.hour + "?";
-        }
-        else if (clockProblem.minute == 30){
-            questionText = "Which clock shows " + clockProblem.slangTerm + " " + clockProblem.hour + "?";
-        }
-        else if (clockProblem.minute == 45){
+        var questionText = "Which clock shows ";
+        //handle the 00 minute
+        if (clockProblem.minute == 00){
+
+           questionText += clockProblem.hour + " " + clockProblem.slangTerm + "?";
+
+        } else if (clockProblem.minute != 45){
+
+            questionText += clockProblem.slangTerm + " " + clockProblem.hour + "?";
+
+        } else if (clockProblem.minute == 45){
+
             if (clockProblem.hour != 12){
-                questionText = "Which clock shows " + clockProblem.slangTerm + " " + Number(clockProblem.hour+1) + "?";
+
+                questionText += clockProblem.slangTerm + " " + Number(clockProblem.hour+1) + "?";
+
             } else {
-                questionText = "Which clock shows " + clockProblem.slangTerm + " 1?";
+
+                questionText += clockProblem.slangTerm + " 1?";
             }
-            
         }
 
         clockProblem.question = questionText;
@@ -256,6 +287,7 @@ function checkAnswer(input, id){
     if (input == correctPosition) {
         console.log('You got it correct.');
         document.getElementById("resultsLabel").innerHTML = "Correct!";
+        document.activeElement.blur();
         setTimeout(getClockProblem, 1000);
     } else {
         console.log('Incorrect. Log this as a missed question.');
@@ -339,7 +371,7 @@ function getHourInEnglish(hour){
 //Get minute that doesn't match the correct minute
 function getRandomMinuteWithException(minute){
     //create array off all possible minutes
-    var minuteArray = [0, 15, 30, 45];
+    var minuteArray = [00,05,10,15,20,25,30,35,40,45,50,55];
     //remove the correct minute
     removeItemFromArrayByValue(minuteArray, minute);
     //get english version of the randomly selected minute

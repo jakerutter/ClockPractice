@@ -19,13 +19,20 @@
     /* width: 20em; */
 }
 
+.buttonH1{
+    display: block;
+    font-size: 2em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
 .analogClockButton{
     border-radius: 50%;
 }
 
 .digitalClockButton{
     background-color: transparent;
-    width: 10em;
+    margin: auto;
 }
 
 .analogClockButton:hover{

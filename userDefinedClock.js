@@ -99,7 +99,9 @@ function getDigitalClock(elementName, hour, minute) {
   var element = document.getElementById(elementName);
   //ensure minute is two digits
   if (minute == 0){
-    minute = "00"
+    minute = "00";
+  } else if (minute == 5){
+    minute = "05";
   }
   
   element.innerHTML = hour + ":" + minute;

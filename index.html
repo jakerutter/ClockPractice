@@ -11,7 +11,7 @@
 <body>
     <h1 class="headTitle">Time Practice</h1>
 
-    <button class="settingsButton" onclick="getClockProblem();">Let's Practice!</button>
+   
 
         <!-- This div should have 1 analog clock with the question time
         and 4 digital clocks for choosing the answer -->
@@ -47,13 +47,13 @@
                 <canvas id="clockQuestion2" class="analogClockQuestion"></canvas>
                 <h4 id="guessTextText" class="questionText"></h4>
                 <div>
-                    <button class="digitalClockButton" onclick="checkAnswer('1', 'text');"><h1 id="text1"></h1></button>
-                    <button class="digitalClockButton" onclick="checkAnswer('2', 'text');"><h1 id="text2"></h1></button>
-                    <button class="digitalClockButton" onclick="checkAnswer('3', 'text');"><h1 id="text3"></h1></button>
-                    <button class="digitalClockButton" onclick="checkAnswer('4', 'text');"><h1 id="text4"></h1></button>
+                    <button class="digitalClockButton" onclick="checkAnswer('1', 'text');"><span class="buttonH1" id="text1"></h1></button>
+                    <button class="digitalClockButton" onclick="checkAnswer('2', 'text');"><span class="buttonH1" id="text2"></h1></button>
+                    <button class="digitalClockButton" onclick="checkAnswer('3', 'text');"><span class="buttonH1" id="text3"></h1></button>
+                    <button class="digitalClockButton" onclick="checkAnswer('4', 'text');"><span class="buttonH1" id="text4"></h1></button>
                 </div>
         </div>
-
+		 <button id="letsPracticeBtn" class="settingsButton" onclick="getClockProblem();">Let's Practice!</button>
         <h2 id="resultsLabel" class="headTitle"></h2>
         
 </body>
