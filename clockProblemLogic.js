@@ -228,9 +228,16 @@ function beginTimerAndScoreTracking(){
     document.getElementById("timeAndScore").classList.remove("hidden");
     document.getElementById("correctAnswers").innerHTML = 0;
     document.getElementById("incorrectAnswers").innerHTML = 0;
-    //var timer = setInterval(1000, );
+    
+    setInterval(countTime, 1000);
 }
 
+function countTime(counter){
+    var counter = Number(document.getElementById("timeDisplay").innerHTML);
+    counter += 1;
+    document.getElementById("timeDisplay").innerHTML = counter;
+    return counter;
+}
 //get the analog clock displays
 function drawAnalogClocks(clockProblem){
     //what time does this clock show? (need 1 analog clock for the question clock, 4 digital for answers)
