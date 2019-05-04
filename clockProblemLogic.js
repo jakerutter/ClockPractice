@@ -123,7 +123,7 @@ function getSlangTerm(clockProblem){
     } else if (minute == 20){
         slang = "twenty after"
     } else if (minute == 25){
-        slang = "twent-five after"
+        slang = "twenty-five after"
     } else if (minute == 30){
         slang = "half past";
     } else if (minute == 35){
@@ -155,6 +155,10 @@ function getClockQuestionText(clockProblem){
         if (clockProblem.minute == 00){
 
            questionText += clockProblem.hour + " " + clockProblem.slangTerm + "?";
+
+        } else if (clockProblem.minute > 30 && clockProblem.minute != 45){
+
+            questionText += clockProblem.slangTerm + " " + Number(clockProblem.hour+1) + "?";
 
         } else if (clockProblem.minute != 45){
 
