@@ -68,7 +68,7 @@ function createQuestionWithFormat(clockProblem) {
 //get the minutes. the options are 0 to 60 in 5 min increments
 function getMinute(){
     var minuteArray = [00,05,10,15,20,25,30,35,40,45,50,55];
-    var minute = minuteArray[getRandomInt(0,4)];
+    var minute = minuteArray[getRandomInt(0,12)];
     return minute;
 }
 
@@ -122,7 +122,7 @@ function getSlangTerm(clockProblem){
         slang = "a quarter after";
     } else if (minute == 20){
         slang = "twenty after"
-    } else if (mniute ==25){
+    } else if (minute == 25){
         slang = "twent-five after"
     } else if (minute == 30){
         slang = "half past";
@@ -222,8 +222,8 @@ function setUI(clockProblem){
 //create timer and set initial score values
 function beginTimerAndScoreTracking(){
     document.getElementById("timeAndScore").classList.remove("hidden");
-    document.getElementById("correctAnswer").innerHTML = 0;
-    document.getElementById("incorrectAnswer").innerHTML = 0;
+    document.getElementById("correctAnswers").innerHTML = 0;
+    document.getElementById("incorrectAnswers").innerHTML = 0;
     //var timer = setInterval(1000, );
 }
 
@@ -301,17 +301,17 @@ function checkAnswer(input, id){
     if (input == correctPosition) {
         console.log('You got it correct.');
         document.getElementById("resultsLabel").innerHTML = "Correct!";
-        var correct = document.getElementById("correctAnswer").innerHTML;
+        var correct = document.getElementById("correctAnswers").innerHTML;
         correct = Number(correct)+1;
-        document.getElementById("correctAnswer").innerHTML = correct;
+        document.getElementById("correctAnswers").innerHTML = correct;
         document.activeElement.blur();
         setTimeout(getClockProblem, 1000);
     } else {
         console.log('Incorrect. Log this as a missed question.');
         document.getElementById("resultsLabel").innerHTML = "Nope, that wasn't the right choice.";
-        var incorrect = document.getElementById("incorrectAnswer").innerHTML;
+        var incorrect = document.getElementById("incorrectAnswers").innerHTML;
         incorrect = Number(incorrect)+1;
-        document.getElementById("incorrectAnswer").innerHTML = incorrect;
+        document.getElementById("incorrectAnswers").innerHTML = incorrect;
         document.getElementById(id+correctPosition).classList.add("green-border");
     }
 }

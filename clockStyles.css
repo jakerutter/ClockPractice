@@ -11,6 +11,15 @@
     border: 5px solid green
 }
 
+.pull_right{
+float: right;
+margin-right: 20px;
+}
+
+.timeAndScore{
+    min-height: 100%;
+}
+
 .buttonH1{
     display: block;
     font-size: 2em;

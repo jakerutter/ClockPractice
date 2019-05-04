@@ -9,15 +9,16 @@
 <link rel="stylesheet" type="text/css" href="clockStyles.css">
 </head>
 <body>
-    <div>
+   
+    <div id="timeAndScore" class="timeAndScore pull_right">
+            <h4>Time Played</h4>
+            <span id="timeDisplay"></span>
+            <div>Correct answers:<span id="correctAnswers"></span></div>
+            <div>Incorrect answers:<span id="incorrectAnswers"></span></div>
+        </div>
     <h1 class="headTitle">Time Practice</h1>
-    <div id="timeAndScore" class="float_right hidden">
-        <h4>Time Played</h4>
-        <span id="timeDisplay"></span>
-        <div>Correct answers:<span id="correctAnswers"></span></div>
-        <div>Incorrect answers:<span id="incorrectAnswers"></span></div>
-    </div>
-    </div>
+    
+    
    
 
         <!-- This div should have 1 analog clock with the question time
@@ -35,13 +36,13 @@
         <!-- This div should have 4 analog clocks as answer options -->
         <div id="pickClock" class="hidden">
             <h4 id="pickClockText" class="questionText"></h4>
-            <div class="grid">
+            <div class="">
                 <div>
                     <button id="pick1" class="analogClockButton" onclick="checkAnswer('1', 'pick');"><span><canvas id="pickCanvas1" class="analogClock"></canvas></span></button>
                     <button id="pick2" class="analogClockButton" onclick="checkAnswer('2', 'pick');"><span><canvas id="pickCanvas2" class="analogClock"></canvas></span></button>
                 </div>
             </div>
-            <div class="grid">
+            <div class="">
                 <div>
                     <button id="pick3" class="analogClockButton" onclick="checkAnswer('3', 'pick');"><span><canvas id="pickCanvas3" class="analogClock"></canvas></span></button>
                     <button id="pick4" class="analogClockButton" onclick="checkAnswer('4', 'pick');"><span><canvas id="pickCanvas4" class="analogClock"></canvas></span></button>
