@@ -20,6 +20,12 @@ function getClockProblem(){
 
     //set UI
     setUI(clockProblem);
+
+    //start timer / score tracker
+    if (!(document.getElementById("letsPracticeBtn").classList.contains("hidden"))){
+
+        beginTimerAndScoreTracking();
+    }
     //hide "Lets Practice button"
     document.getElementById("letsPracticeBtn").classList.add("hidden");
 }
@@ -213,6 +219,14 @@ function setUI(clockProblem){
     }
 }
 
+//create timer and set initial score values
+function beginTimerAndScoreTracking(){
+    document.getElementById("timeAndScore").classList.remove("hidden");
+    document.getElementById("correctAnswer").innerHTML = 0;
+    document.getElementById("incorrectAnswer").innerHTML = 0;
+    //var timer = setInterval(1000, );
+}
+
 //get the analog clock displays
 function drawAnalogClocks(clockProblem){
     //what time does this clock show? (need 1 analog clock for the question clock, 4 digital for answers)
@@ -287,11 +301,17 @@ function checkAnswer(input, id){
     if (input == correctPosition) {
         console.log('You got it correct.');
         document.getElementById("resultsLabel").innerHTML = "Correct!";
+        var correct = document.getElementById("correctAnswer").innerHTML;
+        correct = Number(correct)+1;
+        document.getElementById("correctAnswer").innerHTML = correct;
         document.activeElement.blur();
         setTimeout(getClockProblem, 1000);
     } else {
         console.log('Incorrect. Log this as a missed question.');
         document.getElementById("resultsLabel").innerHTML = "Nope, that wasn't the right choice.";
+        var incorrect = document.getElementById("incorrectAnswer").innerHTML;
+        incorrect = Number(incorrect)+1;
+        document.getElementById("incorrectAnswer").innerHTML = incorrect;
         document.getElementById(id+correctPosition).classList.add("green-border");
     }
 }
