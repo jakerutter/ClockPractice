@@ -10,9 +10,13 @@ There are questions that display four analog clocks with different times and a q
 
 ## Feature List
 Cutover app to use bootstrap
+
 Consider adding some score keeping stats
+
 Consider adding quiz with timer functionality
+
 Improve color & UX
+
 Add military time setting choice. (Toggle between military or standard 12 hour time)
 
 ### Known Bugs
