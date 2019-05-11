@@ -1,70 +1,120 @@
-
 <!DOCTYPE html>
 <html>
 <head>
-<script src="UtilityJS.js"></script>
-<script src="userDefinedClock.js" type="text/javascript"></script>
-<script src="clockProblemLogic.js" type="text/javascript"></script>
-<script src="clockTests.js" type="text/javascript"></script>
-<link rel="stylesheet" type="text/css" href="clockStyles.css">
-</head>
-<body>
-   
-    <div id="timeAndScore" class="timeAndScore pull_right">
-            <h4>Time Played</h4>
-            <span id="timeDisplay">0</span>
-            <div>Correct answers:<span id="correctAnswers"></span></div>
-            <div>Incorrect answers:<span id="incorrectAnswers"></span></div>
-        </div>
-    <h1 class="headTitle">Time Practice</h1>
-    
-    
-   
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<link rel="stylesheet" type="text/css" href="styles/LGstylesheet.css">
+<link rel="stylesheet" type="text/css" href="styles/jquery-ui.structure.min.css">
+<link rel="stylesheet" type="text/css" href="styles/jquery-ui.theme.min.css">
+<link rel="stylesheet" type="text/css" href="styles/jquery-ui.min.css">
+<script type="text/javascript" src="libraries/jquery-3.1.1.js"></script>
+<script type="text/javascript" src="libraries/jquery.simplemodal-1.4.4.js"></script>
+<script type ="text/javascript" src="LGlogic.js"></script>
+<script type ="text/javascript" src="sketch.js"></script>
+<script type ="text/javascript" src="leaf.js"></script>
+<script type ="text/javascript" src="Settings.js"></script>
+<script type ="text/javascript" src="navigation.js"></script>
+<script type="text/javascript"  src="libraries/p5.js"></script>
+<script type="text/javascript" src="libraries/p5.dom.js"></script>
+<script type="text/javascript" src="libraries/jquery-ui.min.js"></script>
 
-        <!-- This div should have 1 analog clock with the question time
-        and 4 digital clocks for choosing the answer -->
-        <div id="guessTime" class="hidden">
-            <canvas id="clockQuestion" class="analogClockQuestion"></canvas>
-            <h4 id="guessTimeText" class="questionText"></h4>
-            <div>
-                <button id="guess1" class="digitalClockButton" onclick="checkAnswer('1', 'guess');"><h1 id="guessCanvas1" class="digitalClock"></h1></button>
-                <button id="guess2" class="digitalClockButton" onclick="checkAnswer('2', 'guess');"><h1 id="guessCanvas2" class="digitalClock"></h1></button>
-                <button id="guess3" class="digitalClockButton" onclick="checkAnswer('3', 'guess');"><h1 id="guessCanvas3" class="digitalClock"></h1></button>
-                <button id="guess4" class="digitalClockButton" onclick="checkAnswer('4', 'guess');"><h1 id="guessCanvas4" class="digitalClock"></h1></button>
-            </div>
-        </div>
-        <!-- This div should have 4 analog clocks as answer options -->
-        <div id="pickClock" class="hidden">
-            <h4 id="pickClockText" class="questionText"></h4>
-            <div class="">
-                <div>
-                    <button id="pick1" class="analogClockButton" onclick="checkAnswer('1', 'pick');"><span><canvas id="pickCanvas1" class="analogClock"></canvas></span></button>
-                    <button id="pick2" class="analogClockButton" onclick="checkAnswer('2', 'pick');"><span><canvas id="pickCanvas2" class="analogClock"></canvas></span></button>
-                </div>
-            </div>
-            <div class="">
-                <div>
-                    <button id="pick3" class="analogClockButton" onclick="checkAnswer('3', 'pick');"><span><canvas id="pickCanvas3" class="analogClock"></canvas></span></button>
-                    <button id="pick4" class="analogClockButton" onclick="checkAnswer('4', 'pick');"><span><canvas id="pickCanvas4" class="analogClock"></canvas></span></button>
-                </div>
-            </div>
-        </div>
-          <!-- This div should have 1 analog clock with the question time
-        and 4 times written in text for choosing the answer -->
-        <div id="guessText" class="hidden">
-                <canvas id="clockQuestion2" class="analogClockQuestion"></canvas>
-                <h4 id="guessTextText" class="questionText"></h4>
-                <div>
-                    <button class="digitalClockButton" onclick="checkAnswer('1', 'text');"><span class="buttonH1" id="text1"></h1></button>
-                    <button class="digitalClockButton" onclick="checkAnswer('2', 'text');"><span class="buttonH1" id="text2"></h1></button>
-                    <button class="digitalClockButton" onclick="checkAnswer('3', 'text');"><span class="buttonH1" id="text3"></h1></button>
-                    <button class="digitalClockButton" onclick="checkAnswer('4', 'text');"><span class="buttonH1" id="text4"></h1></button>
-                </div>
-        </div>
-		 <button id="letsPracticeBtn" class="settingsButton" onclick="getClockProblem();">Let's Practice!</button>
-        <h2 id="resultsLabel" class="headTitle"></h2>
-        
+<title>Learning Game</title>
+</head>
+<body onload='loadLocalStorageValues();'>
+
+<!-- mainDiv will have elements dynamically added and removed -->
+  <div id='mainDiv' class='center large-leaf'>
+    <!-- divButtons will have the initial practice or quiz options -->
+    <div id="divButtons">
+        <button id='btnPractice' class='hidden' style="margin-top:30%;" onclick="gameTypeSelected('practice');"><span class='btnText'>Practice Mode</span></button>
+        <button id='btnQuiz' class='hidden' style='margin-top:20px;' onclick="gameTypeSelected('quiz');"><span class='btnText'>Test Mode</span></button>
+    </div>
+    <!-- divGoalTimer will have the set goal or set timer options -->
+    <div id="divGoalTimer" class="hidden">
+        <p id="pLblGoalTimer" style="margin-top:20%;"><label id='lblGoalTimer' class='sliderLabel hidden unload'></label></p>
+        <input id='inputGoalTimer' type='number' class='answerInput hidden unload' >
+        <button id='submitGoalTimer' style="margin-top:20px;" class='hidden unload settingsButton' onclick="checkGoalTimer();"><span class='btnText'>Submit</span></button>
+    </div>
+    <!-- divProblemFormat will have the game format options -->
+    <div id="divProblemFormat" class='hidden'>
+        <button id='btnStandard' class='hidden' style="margin-top:30px;" onclick="gameFormatSelected('standard');"><span class='btnText'>Standard Math</span></button>
+        <button id='btnEquations' class='hidden' style='margin-top:20px;' onclick="gameFormatSelected('equations');"><span class='btnText'>Equations</span></button>
+        <button id='btnTimesTables' class='hidden' style='margin-top:20px;' onclick="gameFormatSelected('timesTables');"><span class='btnText'>Times Tables</span></button>
+        <button id='btnWord' class='hidden' style='margin-top:20px;' onclick="gameFormatSelected('word');"><span class='btnText'>Word Problems</span></button>
+    </div>
+    <!-- setDivs will hold the math problem type options -->
+    <div id='set1' class='four-leaf center1 hidden'>
+        <button id='btnAdd' class='hidden' style="margin-top:30%;" onclick="problemTypeSelected('add');"><span class='btnText'>Addition</span></button>
+        <button id='btnSub' class='hidden' style='margin-top:20px;' onclick="problemTypeSelected('sub');"><span class='btnText'>Subtraction</span></button>
+    </div>
+    <div id='set2' class='four-leaf center2 hidden'>
+        <button id='btnMult' class='hidden' style="margin-top:30%;" onclick="problemTypeSelected('mult');"><span class='btnText'>Multiplication</span></button>
+        <button id='btnDiv' class='hidden' style='margin-top:20px;' onclick="problemTypeSelected('div');"><span class='btnText'>Division</span></button>
+    </div>
+    <div id='divClear' style='clear:both' class='hidden'></div>
+    <div id='set3' class='four-leaf center3 hidden'>
+            <button id='btnAddSub' class='hidden' style="margin-top:30%;" onclick="problemTypeSelected('addsub');"><span class='btnText'>Addition & Subtraction</span></button>
+            <button id='btnMultDiv' class='hidden' style='margin-top:20px;' onclick="problemTypeSelected('multdiv');"><span class='btnText'>Multiplication & Division</span></button>
+    </div>
+    <div id='set4' class='four-leaf center4 hidden'>
+        <button id='btnMoney' class='hidden' style="margin-top:30%;" onclick="problemTypeSelected('money');"><span class='btnText'>Money Math</span></button>
+        <button id='btnPercent' class='hidden' style='margin-top:20px;' onclick="problemTypeSelected('percent');"><span class='btnText'>Percent Problems</span></button>
+    </div>
+    <div id='wholeNumberSelectDiv' class='four-leaf center hidden'>
+        <p style="margin-top:30%;">
+            <label for="wholeAmount" class='sliderLabel'>Select range:</label>
+            <input type="text" id="wholeAmount" readonly class="sliderRangeNumbers">
+        </p>      
+            <div id="slider-range"></div>
+            <button id='sumbitWholeRange' style="margin-top:20px;" class='settingsButton' onclick="submitWholeRange();"><span class='btnText'>Submit</span></button>
+    </div>
+    <div id='moneyNumberSelectDiv' class='four-leaf center hidden'>
+        <p style="margin-top:30%;">
+            <label for="moneyAmount" class='sliderLabel' >Select range:</label>
+            <input type="text" id="moneyAmount" readonly class="sliderRangeNumbers">
+        </p>      
+            <div id="money-slider-range"></div>
+            <button id='sumbitMoneyRange' style="margin-top:20px;" class='settingsButton' onclick="submitMoneyRange();"><span class='btnText'>Submit</span></button>
+    </div>
+    <div id='timesTablesNumberSelectDiv' class='four-leaf center hidden'>
+        <p style="margin-top:20%;">
+            <label for="timesAmount" class='sliderLabel' >What number:</label>
+            <input type="number" id="timesAmount" class='timesTableNumbers' step="1" min="0"><br><br>
+            <label for="multipleAmount" class='sliderLabel'>Up to what multiple:</label>
+            <input type='number' id='multipleAmount' class='timesTableNumbers' step="1" min="0">
+        </p> 
+        <button id='sumbitTimesTablesRange' style="margin-top:20px;" class='settingsButton' onclick="checkTTInputs();"><span class='btnText'>Submit</span></button> 
+    </div>
+    <div id='questionLeaf' class='large-leaf center hidden'>
+        <p style="margin-top:20%;">
+            <textarea id="currentWordQuestion" readonly class='wordQuestionDisplay hidden'></textarea>
+            <input type="text" id="currentQuestion" readonly class="questionDisplay">
+            <input type="text" id="currentAnswerDisplay" readonly class="answerDisplay">
+        </p>
+        <p id='pAnswerDisplay' class='hidden'><input type="text" id='equationAnswerDisplay' readonly="" class="answerDisplay"></p>
+            <input type='number' id='currentAnswer' style="margin-top:10px;" class="answerInput">
+            <button id='submitAnswer' style="margin-top:20px;" class='settingsButton' onclick="checkAnswerInput();"><span class='btnText'>Submit</span></button> 
+    </div>
+            
+
+    <!-- end of mainDiv -->
+  </div>
+    <div id='divStats' class="divStats hidden unload">
+        <span id='statHeader' class='divStatHeader'>Game Stats</span>
+        <br><br>
+        <span id='allTimeScore' class='statDetails'></span>
+        <br><br>
+        <span id='currentStreak' class='statDetails'></span>
+        <br><br>
+        <span id='percentCorrect' class='statDetails'></span>
+        <br><br>
+        <span id='goalRemaining' class='statDetails hidden'></span>
+        <span id='timeRemaining' class='statDetails hidden'></span>
+    </div>  
+
+    <div class='hidden' id='hdnVariable'></div>
+    <div class="hidden" id="hdnBonusQuestionCount">0</div>
+
 </body>
-<div id="hdnID" class="hidden"></div>
-<div id="hiddenField" class="hidden"></hidden>
+
 </html>
+
