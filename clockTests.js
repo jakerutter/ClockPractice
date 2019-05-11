@@ -44,3 +44,16 @@ function  testClockProblemCorrectAnswerPosition(clockProblem){
         alert('Failed test. Correct position is invalid. Error 5.');
     }
 }
+
+//test clock problem hour for 13
+function testClockProblemHourForThirteen(clockProblem){
+    if ((clockProblem.hour == undefined) || (clockProblem.hour < 1) || (clockProblem.hour > 12)) {
+        console.log('Error Encountered. Clock hour problem encountered.');
+        console.log('Current value for hour is ' + clockProblem.hour);
+        console.log('Minute is ' + clockProblem.minute);
+        console.log('Slang is ' + clockProblem.slangTerm);
+        
+    } else {
+        console.log('Passed clock problem hour test.');
+    }
+}

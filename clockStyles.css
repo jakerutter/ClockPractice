@@ -17,7 +17,9 @@ margin-right: 20px;
 }
 
 .timeAndScore{
-    min-height: 100%;
+    margin-top: -300px;
+    width:15em;
+    background-color: #f3f3f3;
 }
 
 .buttonH1{

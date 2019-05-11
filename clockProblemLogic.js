@@ -158,7 +158,14 @@ function getClockQuestionText(clockProblem){
 
         } else if (clockProblem.minute > 30 && clockProblem.minute != 45){
 
+            if (clockProblem.hour != 12){
+
             questionText += clockProblem.slangTerm + " " + Number(clockProblem.hour+1) + "?";
+
+            } else {
+
+                questionText += clockProblem.slangTerm + " 1?";
+            }
 
         } else if (clockProblem.minute != 45){
 
@@ -181,6 +188,9 @@ function getClockQuestionText(clockProblem){
     }else {
         alert('Encountered an error with the question format. Error 1.');
     }
+    
+    //add test for logging 13 hour issue that has arisen
+    testClockProblemHourForThirteen(clockProblem);
 
     return clockProblem;
 }
