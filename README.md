@@ -8,10 +8,13 @@ There are questions that display a single analog clock with randomized time (5 m
 
 There are questions that display four analog clocks with different times and a question written in English asking the user to identify the clock displaying a specific time.
 
-## Feature List
+## Recently Added
+Recently added a simple score keeping system & timer displaying amount of time played in seconds.
+
+## Feature Roadmap
 Cutover app to use bootstrap
 
-Consider adding some score keeping stats
+Imrove score keeping stats
 
 Consider adding quiz with timer functionality
 
