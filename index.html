@@ -10,8 +10,11 @@
 </head>
 <body>
    
-    <h1 class="headTitle">Time Practice</h1>
+   
 
+    <div id="mainContent">
+
+        <h1 class="headTitle">Time Practice</h1>
         <!-- This div should have 1 analog clock with the question time
         and 4 digital clocks for choosing the answer -->
         <div id="guessTime" class="hidden">
@@ -55,12 +58,14 @@
 		 <button id="letsPracticeBtn" class="settingsButton" onclick="getClockProblem();">Let's Practice!</button>
         <h2 id="resultsLabel" class="headTitle"></h2>
         
-        <div id="timeAndScore" class="timeAndScore pull_right">
-            <h4>Time Played</h4>
-            <span id="timeDisplay">0</span>
-            <div class="statPlaceholderText">Correct answers:<span id="correctAnswers"></span></div>
-            <div class="statPlaceholderText">Incorrect answers:<span id="incorrectAnswers"></span></div>
-        </div>
+    </div>
+
+    <div id="timeAndScore" class="timeAndScore pull_right">
+        <h4>Time Played</h4>
+        <span id="timeDisplay">0</span>
+        <div class="statPlaceholderText">Correct answers:<span id="correctAnswers"></span></div>
+        <div class="statPlaceholderText">Incorrect answers:<span id="incorrectAnswers"></span></div>
+    </div>
 
 </body>
 <div id="hdnID" class="hidden"></div>

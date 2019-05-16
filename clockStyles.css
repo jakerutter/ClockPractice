@@ -6,6 +6,12 @@
     margin: 0;
     text-align: center;
 }
+#mainContent {
+    float: left;
+    height: 400px;
+    margin-right: 10px;
+    width: 85%;
+}
 
 .green-border{
     border: 5px solid green
@@ -13,13 +19,13 @@
 
 .pull_right{
 float: right;
-margin-right: 20px;
 }
 
 .timeAndScore{
-    margin-top: -300px;
-    width:15em;
-    background-color: #f3f3f3;
+    height: 425px;
+    overflow: hidden;
+    margin-top: 5%;
+    margin-right: 40px;
 }
 
 .buttonH1{
