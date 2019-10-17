@@ -3,11 +3,15 @@
 function getClockProblem(){
 
     //create empty clockProblem object
-    var clockProblem = new ClockProblem(0, 0, 0, "", "", "", 0, []);
+    var clockProblem = new ClockProblem(0, 0, 0, 0, 0, "", "", "", "", "", "", 0, []);
 
     //get question format
-    // 1) what time does this clock show ? (answer will be digital clock style)
-    // 2) which clock shows x' oClock ? (answer will be clicking on one of 4 clocks)
+    // 1) what time does this clock show ? (answer will be digital clock style): "guessTime"
+    // 2) which clock shows x' oClock ? (answer will be clicking on one of 4 clocks): "pickClock" || "guessText"
+    // 3) how many minutes between these two clocks ? (answer will be to evaluate the time in both and return the difference in time): "timeDiff"
+    // 4) trivia - how many minutes are in a half hour? (answer will be appropriate for question): "trivia"
+    // 5) time word problems: "wordProblem"
+    // 6) set the clock to show x' oClock ? (answer will be user setting analog clock hands to correct position): "setTime"
     getQuestionFormat(clockProblem);
     testClockProblemQuestionFormat(clockProblem);
 
@@ -15,8 +19,12 @@ function getClockProblem(){
     createQuestionWithFormat(clockProblem);
 
     //get the position the correct answer will be placed in
-    getCorrectAnswerPosition(clockProblem);
-    testClockProblemCorrectAnswerPosition(clockProblem);
+    //not needed for questions that will have a numerical answer
+    if(clockProblem.format == "guessTime" || clockProblem.format == "guessText" || clockProblem.format == "pickClock"){
+           
+        getCorrectAnswerPosition(clockProblem);
+        testClockProblemCorrectAnswerPosition(clockProblem); 
+    }
 
     //set UI
     setUI(clockProblem);
@@ -31,24 +39,48 @@ function getClockProblem(){
 }
 
 //create empty clock problem
-function ClockProblem(hours, minutes, time, question, format, slang, correctPosition, notAnswerArray){
-    this.hours = hours;
-    this.minutes = minutes;
+function ClockProblem(hour, minute, secondHour, secondMinute, time, question, format, slang, secondSlang, ampm, secondampm, correctPosition, notAnswerArray){
+    this.hour = hour;
+    this.minute = minute;
+    this.secondHour = secondHour;
+    this.secondMinute = secondMinute;
     this.time = time;
     this.question = question;
     this.format = format;
     this.slang = slang;
+    this.secondSlang = secondSlang;
+    this.ampm = ampm;
+    this.secondampm = secondampm;
     this.correctPosition = correctPosition;
     this.notAnswerArray = notAnswerArray;
 }
 
 //gets either "guessTime" or "pickClock" as game types and hydrates clockProblem.format
 function getQuestionFormat(clockProblem){
-    var questionFormat = getRandomInt(0, 3);
-    questionFormat = (questionFormat == 0 ? "guessTime" : (questionFormat == 1 ? "pickClock" : "guessText"));
-    clockProblem.format = questionFormat;
+    var questionFormat = getRandomInt(0, 4);
+    clockProblem.format = getQuestionFormatString(questionFormat);
     return clockProblem;
 }
+
+function getQuestionFormatString(questionFormat){
+   var formatString;
+   if (questionFormat === 0){
+       formatString = "guessTime";
+    } else if(questionFormat === 1){
+        formatString = "pickClock";
+    } else if(questionFormat === 2){
+        formatString = "guessText";
+    } else if(questionFormat === 3){
+        formatString = "trivia";
+    } else if(questionFormat === 4){
+        formatString = "timeDiff";
+    } else if(questionFormat === 5){
+        formatString = "wordProblem";
+    } else if(questionFormat === 6){
+        formatString = "setTime";
+    }
+    return formatString;
+ }
 
 function createQuestionWithFormat(clockProblem) {
     //get hour and minute
@@ -57,8 +89,22 @@ function createQuestionWithFormat(clockProblem) {
     clockProblem.minute = getMinute();
     testClockProblemMinute(clockProblem);
 
+    //get second hour and second minute
+    clockProblem.secondHour = getRandomInt(1, 12);
+    testClockProblemSecondHour(clockProblem);
+    clockProblem.secondMinute = getMinute();
+    testClockProblemSecondMinute(clockProblem);
+
     //get slang term for minute (like quarter til or half past)
-    getSlangTerm(clockProblem);
+    clockProblem.slangTerm = getSlangTerm(clockProblem.minute);
+    //get second slang term for second minute
+    clockProblem.secondSlangTerm = getSlangTerm(clockProblem.secondMinute);
+
+    //get AMPM value
+    clockProblem.ampm = getAMPM();
+    //get second AMPM vlaue
+    clockProblem.secondampm = getAMPM();
+
     //get the text for the clock problem (what time does this clock show)
     getClockQuestionText(clockProblem);
 
@@ -108,8 +154,7 @@ function getMinuteInEnglish(minute){
 }
 
 //get the slang term
-function getSlangTerm(clockProblem){
-    var minute = clockProblem.minute;
+function getSlangTerm(minute){
     var slang;
 
     if (minute == 00){
@@ -138,21 +183,26 @@ function getSlangTerm(clockProblem){
         slang = "five til";
     }
 
-    clockProblem.slangTerm = slang;
-    return clockProblem;
+    return slang;
+}
+
+//get ampm value
+function getAMPM(){
+    var randomInt = getRandomInt(0, 1);
+    return randomInt == 0 ? "A.M." : "P.M."; 
 }
 
 //get the question text (what time does this clock show?)
 function getClockQuestionText(clockProblem){
     //what time does this clock show ? (answer will be digital clock style)
-    if ((clockProblem.format == "guessTime") || (clockProblem.format == "guessText")){
+    if ((clockProblem.format === "guessTime") || (clockProblem.format === "guessText")){
         clockProblem.question = "What time is shown?";
     }
     //which clock shows x' oClock ? (answer will be clicking on one of 4 clocks)
-    else if (clockProblem.format == "pickClock"){
+    else if (clockProblem.format === "pickClock"){
         var questionText = "Which clock shows ";
         //handle the 00 minute
-        if (clockProblem.minute == 00){
+        if (clockProblem.minute === 00){
 
            questionText += clockProblem.hour + " " + clockProblem.slangTerm + "?";
 
@@ -185,6 +235,25 @@ function getClockQuestionText(clockProblem){
 
         clockProblem.question = questionText;
 
+    // timeDiff questions - show two clocks and ask the difference between the two
+    } else if (clockProblem.format === "timeDiff") {
+        console.log('----------> haven\'t coded time difference');
+        getClockProblem();
+
+    } else if (clockProblem.format === "trivia") {
+        
+        var randomInt = getRandomInt(0, 7);
+        clockProblem.question = getTriviaQuestion(randomInt);
+        clockProblem.answer = getTriviaAnswer(randomInt);
+
+    } else if (clockProblem.format === "wordProblem") {
+        console.log('----------> haven\'t coded word problem');
+        getClockProblem();
+
+    } else if (clockProblem.format === "setTime") {
+        console.log('----------> haven\'t coded set time');
+        getClockProblem();
+
     }else {
         alert('Encountered an error with the question format. Error 1.');
     }
@@ -210,26 +279,40 @@ function setUI(clockProblem){
 
     clearUI();
     
-    //save the correct answer location to hidden field
-    document.getElementById("hiddenField").innerHTML = clockProblem.correctPosition;
-    //draw the clock displays
-    drawAnalogClocks(clockProblem);
+    //only draw analog clocks if needed
+    if(clockProblem.format === "guessTime" || clockProblem.format === "guessText" || clockProblem.format === "pickClock"){
+    
+        //save the correct answer location to hidden field
+        document.getElementById("hiddenField").innerHTML = clockProblem.correctPosition;
+        //draw the clock displays
+        drawAnalogClocks(clockProblem);
+    }
 
     //if format is guessTime need to draw digital clocks as well
     //unhide the guessTime div
-    if (clockProblem.format == "guessTime"){
+    if (clockProblem.format === "guessTime"){
         drawDigitalClocks(clockProblem);
         document.getElementById("guessTime").classList.remove("hidden");
         document.getElementById("guessTimeText").innerText = clockProblem.question;
+
     //unhide pickClock div
-    } else if (clockProblem.format == "pickClock") {
+    } else if (clockProblem.format === "pickClock") {
         document.getElementById("pickClock").classList.remove("hidden");
         document.getElementById("pickClockText").innerText = clockProblem.question;
-    } else {
+
     //unhide guessText div
+    } else if (clockProblem.format === "guessText") {
         document.getElementById("guessText").classList.remove("hidden");
         getTextAnswers(clockProblem);
         document.getElementById("guessTextText").innerText = clockProblem.question;
+
+    //unhide triviaSection div
+    } else if (clockProblem.format === "trivia"){
+        document.getElementById("triviaSection").classList.remove("hidden");
+        document.getElementById("triviaQuestion").innerText = clockProblem.question;
+        //save the correct answer to hidden field
+        document.getElementById("hiddenField").innerHTML = clockProblem.answer;
+        document.getElementById("triviaInput").focus();
     }
 }
 
@@ -248,6 +331,7 @@ function countTime(counter){
     document.getElementById("timeDisplay").innerHTML = counter;
     return counter;
 }
+
 //get the analog clock displays
 function drawAnalogClocks(clockProblem){
     //what time does this clock show? (need 1 analog clock for the question clock, 4 digital for answers)
@@ -313,6 +397,11 @@ function clearUI(){
     document.getElementById("guessTime").classList.add("hidden");
     document.getElementById("pickClock").classList.add("hidden");
     document.getElementById("guessText").classList.add("hidden");
+    document.getElementById("triviaSection").classList.add("hidden");
+
+    //clear trivia border classes
+    document.getElementById("triviaInput").classList.remove("green-border-thin");
+    document.getElementById("triviaInput").classList.remove("red-border-thin");
 }
 
 //check the user's input versus the correct answer
@@ -334,6 +423,33 @@ function checkAnswer(input, id){
         incorrect = Number(incorrect)+1;
         document.getElementById("incorrectAnswers").innerHTML = incorrect;
         document.getElementById(id+correctPosition).classList.add("green-border");
+    }
+}
+
+function submitTriviaAnswer(){
+    //remove trivia input border class
+    document.getElementById("triviaInput").classList.remove("red-border-thin");
+
+    var correctAnswer = document.getElementById("hiddenField").innerHTML;
+    var submittedAnswer = document.getElementById("triviaInput").value;
+    if (Number(submittedAnswer) === Number(correctAnswer)){
+        console.log('You got it correct.');
+        document.getElementById("resultsLabel").innerHTML = "Correct!";
+        var correct = document.getElementById("correctAnswers").innerHTML;
+        correct = Number(correct)+1;
+        document.getElementById("correctAnswers").innerHTML = correct;
+        document.activeElement.blur();
+        document.getElementById("triviaInput").value = "";
+        document.getElementById("triviaInput").classList.add("green-border-thin");
+        setTimeout(getClockProblem, 1000);
+    } else {
+        console.log('Incorrect. Log this as a missed question.');
+        document.getElementById("resultsLabel").innerHTML = "Nope, that is not correct.";
+        var incorrect = document.getElementById("incorrectAnswers").innerHTML;
+        incorrect = Number(incorrect)+1;
+        document.getElementById("incorrectAnswers").innerHTML = incorrect;
+        document.getElementById("triviaInput").classList.add("red-border-thin");
+        document.getElementById("triviaInput").value = "";
     }
 }
 
@@ -419,3 +535,4 @@ function getRandomMinuteWithException(minute){
     var minuteText = getMinuteInEnglish(minuteArray[getRandomInt(0,minuteArray.length)]);
     return minuteText;
 }
+

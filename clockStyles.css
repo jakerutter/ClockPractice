@@ -13,8 +13,27 @@
     width: 85%;
 }
 
+.headTitle{
+    margin-bottom: 5%;
+}
+
+.spacer{
+    height:40px;
+}
 .green-border{
-    border: 5px solid green
+    border: 5px solid green;
+}
+
+.green-border-thin{
+    border: 2px solid green;
+}
+
+.red-border{
+    border: 5px solid red;
+}
+
+.red-border-thin{
+    border: 2px solid red;
 }
 
 .pull_right{

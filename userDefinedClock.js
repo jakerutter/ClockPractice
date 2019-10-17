@@ -6,8 +6,8 @@ function getAnalogClock(elementName, hour, minute){
   var radius = element.height / 2;
   var widthByTwo = element.width / 2;
   graphic.translate(widthByTwo, radius);
-  //JTR - want to remove this line if I don't need it
-  // radius = radius * 0.90
+  //JTR - this line controls the size of the clock
+  //radius = radius * .90
 
   startClock(graphic, radius, hour, minute);
 }
@@ -62,21 +62,24 @@ function drawTime(graphic, radius, hour, minute){
     
     hour=hour%12;
     hour=(hour*Math.PI/6)+(minute*Math.PI/(6*60))+(second*Math.PI/(360*60));
-    drawHand(graphic, hour, radius*0.5, radius*0.07);
+    drawHand(graphic, hour, radius*0.5, radius*0.07, "#00008B"); //dark blue
  
     minute=(minute*Math.PI/30)+(second*Math.PI/(30*60));
-    drawHand(graphic, minute, radius*0.8, radius*0.07);
- 
-    second=(second*Math.PI/30);
-    drawHand(graphic, second, radius*0.9, radius*0.02);
+    drawHand(graphic, minute, radius*0.8, radius*0.07, "#8B0000");
+    // JTR decided not to show second hand for now
+    //second=(second*Math.PI/30);
+    //drawHand(graphic, second, radius*0.9, radius*0.02);
 }
-function drawHand(graphic, position, length, width) {
+
+function drawHand(graphic, position, length, width, color) {
+    color = color == "" ? "#000000" : color;
     graphic.beginPath();
     graphic.lineWidth = width;
     graphic.lineCap = "round";
     graphic.moveTo(0,0);
     graphic.rotate(position);
     graphic.lineTo(0, -length);
+    graphic.strokeStyle = color;
     graphic.stroke();
     graphic.rotate(-position);
 }

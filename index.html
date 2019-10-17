@@ -6,6 +6,7 @@
 <script src="userDefinedClock.js" type="text/javascript"></script>
 <script src="clockProblemLogic.js" type="text/javascript"></script>
 <script src="clockTests.js" type="text/javascript"></script>
+<script src="triviaBank.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="clockStyles.css">
 </head>
 <body>
@@ -55,6 +56,15 @@
                     <button class="digitalClockButton" onclick="checkAnswer('4', 'text');"><span class="buttonH1" id="text4"></h1></button>
                 </div>
         </div>
+         <!-- This div should have a text question and an input for an answer -->
+        <div id="triviaSection" class="hidden">
+            <h2 id="triviaQuestion" class="questionText"></h4>
+            <div class="spacer"></div>
+            <div>
+                <input type="number" id="triviaInput"/>
+                <button type="button" class="settingsButton" onclick="submitTriviaAnswer();">Submit</button>
+            </div>
+    </div>
 		 <button id="letsPracticeBtn" class="settingsButton" onclick="getClockProblem();">Let's Practice!</button>
         <h2 id="resultsLabel" class="headTitle"></h2>
         
