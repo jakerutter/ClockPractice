@@ -450,6 +450,7 @@ function submitTriviaAnswer(){
         document.getElementById("incorrectAnswers").innerHTML = incorrect;
         document.getElementById("triviaInput").classList.add("red-border-thin");
         document.getElementById("triviaInput").value = "";
+        document.getElementById("triviaInput").focus();
     }
 }
 
