@@ -58,6 +58,7 @@ function ClockProblem(hour, minute, secondHour, secondMinute, time, question, fo
 //gets either "guessTime" or "pickClock" as game types and hydrates clockProblem.format
 function getQuestionFormat(clockProblem){
     var questionFormat = getRandomInt(0, 4);
+
     clockProblem.format = getQuestionFormatString(questionFormat);
     return clockProblem;
 }
@@ -79,6 +80,7 @@ function getQuestionFormatString(questionFormat){
     } else if(questionFormat === 6){
         formatString = "setTime";
     }
+    console.log(formatString);
     return formatString;
  }
 
@@ -111,47 +113,7 @@ function createQuestionWithFormat(clockProblem) {
     return clockProblem;
 }
 
-//get the minutes. the options are 0 to 60 in 5 min increments
-function getMinute(){
-    var minuteArray = [00,05,10,15,20,25,30,35,40,45,50,55];
-    var minute = minuteArray[getRandomInt(0,12)];
-    return minute;
-}
 
-function getMinuteInEnglish(minute){
-    var minuteText;
-    if (minute == 00){
-        minuteText = "o'clock";
-    } else if (minute == 05){
-        minuteText = "o' five";
-    } else if (minute == 10){
-        minuteText = "ten";
-    } else if (minute == 15){
-        minuteText = "fifteen";
-    } else if (minute == 20){
-        minuteText = "twenty";
-    } else if (minute == 25){
-        minuteText = "twenty-five";
-    } else if (minute == 30){
-        minuteText = "thirty";
-    } else if (minute == 35){
-        minuteText = "thirty-five";
-    } else if (minute == 40){
-        minuteText = "forty";
-    } else if (minute == 45){
-        minuteText = "forty-five";
-    } else if (minute == 50){
-        minuteText = "fifty";
-    } else if (minute == 55){
-        minuteText = "fifty-five";
-    } else {
-        console.log('Error encountered. Get minute in english conversion failed. Error 7.');
-        console.log(minute + "<--- that is minute");
-        alert('Error 7');
-    }
-    
-    return minuteText;
-}
 
 //get the slang term
 function getSlangTerm(minute){
@@ -341,23 +303,23 @@ function drawAnalogClocks(clockProblem){
     //which clock shows x o'Clock? (need 4 analog clocks)
     else if (clockProblem.format == "pickClock"){
         getAnalogClock('pickCanvas'+clockProblem.correctPosition, clockProblem.hour, clockProblem.minute);
-        getAnalogClock('pickCanvas'+clockProblem.notAnswerArray[0], getRandomIntWithException(1, 12, clockProblem.hour), getMinute());
-        getAnalogClock('pickCanvas'+clockProblem.notAnswerArray[1], getRandomIntWithException(1, 12, clockProblem.hour), getMinute());
-        getAnalogClock('pickCanvas'+clockProblem.notAnswerArray[2], getRandomIntWithException(1, 12, clockProblem.hour), getMinute());
+        //Cranking up the difficulty. Purposefully spoofing answers closer to the actual answer
+        getAnalogClock('pickCanvas'+clockProblem.notAnswerArray[0], clockProblem.hour, getRandomMinuteWithException(clockProblem.minute));
+        getAnalogClock('pickCanvas'+clockProblem.notAnswerArray[1], clockProblem.hour+1, getMinute());
+        getAnalogClock('pickCanvas'+clockProblem.notAnswerArray[2], clockProblem.hour-1, getMinute());
     } else {
         //need 1 analog clock for question clock. 4 text times for answers
         getAnalogClock("clockQuestion2", clockProblem.hour, clockProblem.minute);
-        
     }
-    
 }
 
 //get the digital clock displays
 function drawDigitalClocks(clockProblem){
     getDigitalClock('guessCanvas'+clockProblem.correctPosition, clockProblem.hour, clockProblem.minute);
-    getDigitalClock('guessCanvas'+clockProblem.notAnswerArray[0], getRandomIntWithException(1, 12, clockProblem.hour), getMinute());
-    getDigitalClock('guessCanvas'+clockProblem.notAnswerArray[1], getRandomIntWithException(1, 12, clockProblem.hour), getMinute());
-    getDigitalClock('guessCanvas'+clockProblem.notAnswerArray[2], getRandomIntWithException(1, 12, clockProblem.hour), getMinute());
+    //Cranking up the difficulty. Purposefully spoofing answers closer to the actual answer
+    getDigitalClock('guessCanvas'+clockProblem.notAnswerArray[0], clockProblem.hour, getRandomMinuteWithException(clockProblem.minute));
+    getDigitalClock('guessCanvas'+clockProblem.notAnswerArray[1], clockProblem.hour+1, getMinute());
+    getDigitalClock('guessCanvas'+clockProblem.notAnswerArray[2], clockProblem.hour-1, getMinute());
 }
 
 function clearUI(){
@@ -429,9 +391,10 @@ function checkAnswer(input, id){
 function submitTriviaAnswer(){
     //remove trivia input border class
     document.getElementById("triviaInput").classList.remove("red-border-thin");
-
     var correctAnswer = document.getElementById("hiddenField").innerHTML;
     var submittedAnswer = document.getElementById("triviaInput").value;
+
+    //correct
     if (Number(submittedAnswer) === Number(correctAnswer)){
         console.log('You got it correct.');
         document.getElementById("resultsLabel").innerHTML = "Correct!";
@@ -442,7 +405,9 @@ function submitTriviaAnswer(){
         document.getElementById("triviaInput").value = "";
         document.getElementById("triviaInput").classList.add("green-border-thin");
         setTimeout(getClockProblem, 1000);
+
     } else {
+        //incorrect
         console.log('Incorrect. Log this as a missed question.');
         document.getElementById("resultsLabel").innerHTML = "Nope, that is not correct.";
         var incorrect = document.getElementById("incorrectAnswers").innerHTML;
@@ -461,9 +426,9 @@ function clearInnerHtml(id){
 
 function getTextAnswers(clockProblem){
     document.getElementById("text"+clockProblem.correctPosition).innerHTML = getCorrectAnswerText(clockProblem);
-    document.getElementById("text"+clockProblem.notAnswerArray[0]).innerHTML = getTextForWrongAnswers(clockProblem);
-    document.getElementById("text"+clockProblem.notAnswerArray[1]).innerHTML = getTextForWrongAnswers(clockProblem);
-    document.getElementById("text"+clockProblem.notAnswerArray[2]).innerHTML = getTextForWrongAnswers(clockProblem);
+    document.getElementById("text"+clockProblem.notAnswerArray[0]).innerHTML = getTextForWrongAnswers(clockProblem, 0);
+    document.getElementById("text"+clockProblem.notAnswerArray[1]).innerHTML = getTextForWrongAnswers(clockProblem, 1);
+    document.getElementById("text"+clockProblem.notAnswerArray[2]).innerHTML = getTextForWrongAnswers(clockProblem, 2);
         
 }
 
@@ -472,23 +437,17 @@ function getCorrectAnswerText(clockProblem){
     return answerText;
 }
 
-function getTextForWrongAnswers(clockProblem){
+function getTextForWrongAnswers(clockProblem, value){
     var answerText;
-    var randomInt = getRandomInt(0, 2);
+    var hours = [clockProblem.hour, clockProblem.hour+1, clockProblem.hour-1];
     //going to allow the same hour but enforce different minutes
-    if (randomInt == 0) {
-        var hour = getRandomInt(1,12)
-        hour = getHourInEnglish(hour);
-        var minute = getRandomMinuteWithException(clockProblem.minute);
-        answerText = hour + " " + minute;
-    //going to allow same minute but different hour
-    } else {
-        var hour = getRandomIntWithException(1, 12, clockProblem.hour);
-        hour = getHourInEnglish(hour);
-        var minute = getMinute();
-        minute = getMinuteInEnglish(minute);
-        answerText = hour + " " + minute;
-    }
+
+    var hour = getHourInEnglish(hours[value]);
+    var minute;
+    value == 0 ? minute = getRandomMinuteInEnglishWithException(clockProblem.minute) : getMinuteInEnglish(clockProblem.minute);
+    // var minute = getRandomMinuteInEnglishWithException(clockProblem.minute);
+    answerText = hour + " " + minute;
+
     return answerText;
 }
 
@@ -519,21 +478,74 @@ function getHourInEnglish(hour){
     } else if (hour == 12){
         hourText = "Twelve";
     } else{
-        console.log("Error encountered. Hour to english conversion failed. Error 6.");
+        console.log("Error encountered. Hour to english conversion failed. Hour came in as "+hour+". Error 6.");
         alert("Error 6.");
     }
 
     return hourText;
 }
 
-//Get minute that doesn't match the correct minute
+//get the minutes. the options are 0 to 60 in 5 min increments
+function getMinute(){
+    var minuteArray = [00,05,10,15,20,25,30,35,40,45,50,55];
+    var minute = minuteArray[getRandomInt(0,12)];
+    return minute;
+}
+
+//Get minute that doesn't match the minute passed in
 function getRandomMinuteWithException(minute){
     //create array off all possible minutes
     var minuteArray = [00,05,10,15,20,25,30,35,40,45,50,55];
     //remove the correct minute
     removeItemFromArrayByValue(minuteArray, minute);
     //get english version of the randomly selected minute
-    var minuteText = getMinuteInEnglish(minuteArray[getRandomInt(0,minuteArray.length)]);
+    var min = minuteArray[getRandomInt(0, minuteArray.length)];
+    return min;
+}
+
+function getMinuteInEnglish(minute){
+    var minuteText;
+    if (minute == 00){
+        minuteText = "o'clock";
+    } else if (minute == 05){
+        minuteText = "o' five";
+    } else if (minute == 10){
+        minuteText = "ten";
+    } else if (minute == 15){
+        minuteText = "fifteen";
+    } else if (minute == 20){
+        minuteText = "twenty";
+    } else if (minute == 25){
+        minuteText = "twenty-five";
+    } else if (minute == 30){
+        minuteText = "thirty";
+    } else if (minute == 35){
+        minuteText = "thirty-five";
+    } else if (minute == 40){
+        minuteText = "forty";
+    } else if (minute == 45){
+        minuteText = "forty-five";
+    } else if (minute == 50){
+        minuteText = "fifty";
+    } else if (minute == 55){
+        minuteText = "fifty-five";
+    } else {
+        console.log('Error encountered. Get minute in english conversion failed. Error 7.');
+        console.log(minute + "<--- that is minute");
+        alert('Error 7');
+    }
+    
+    return minuteText;
+}
+
+//Get minute (in English) that doesn't match the minute passed in 
+function getRandomMinuteInEnglishWithException(minute){
+    //create array off all possible minutes
+    var minuteArray = [00,05,10,15,20,25,30,35,40,45,50,55];
+    //remove the correct minute
+    removeItemFromArrayByValue(minuteArray, minute);
+    //get english version of the randomly selected minute
+    var minuteText = getMinuteInEnglish(minuteArray[getRandomInt(0, minuteArray.length)]);
     return minuteText;
 }
 

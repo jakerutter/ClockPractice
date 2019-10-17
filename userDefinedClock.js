@@ -59,13 +59,14 @@ function drawTime(graphic, radius, hour, minute){
     // var hour = currentTime.getHours();
     // var minute = currentTime.getMinutes();
     // var second = currentTime.getSeconds();
-    
+
     hour=hour%12;
     hour=(hour*Math.PI/6)+(minute*Math.PI/(6*60))+(second*Math.PI/(360*60));
-    drawHand(graphic, hour, radius*0.5, radius*0.07, "#00008B"); //dark blue
  
     minute=(minute*Math.PI/30)+(second*Math.PI/(30*60));
-    drawHand(graphic, minute, radius*0.8, radius*0.07, "#8B0000");
+    drawHand(graphic, minute, radius*0.75, radius*0.07, "#8B0000"); //MINUTE hand -- dark red
+
+    drawHand(graphic, hour, radius*0.5, radius*0.07, "#00008B"); //HOUR hand -- dark blue
     // JTR decided not to show second hand for now
     //second=(second*Math.PI/30);
     //drawHand(graphic, second, radius*0.9, radius*0.02);

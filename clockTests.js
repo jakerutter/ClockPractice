@@ -22,7 +22,7 @@ function testClockProblemQuestionFormat(clockProblem){
             }
         }
     } else {
-        console.log('Passed clock problem format test.');
+        //console.log('Passed clock problem format test.');
     }
 }
 
@@ -32,7 +32,7 @@ function testClockProblemHour(clockProblem){
         console.log('Current value for hour is ' + clockProblem.hour);
         alert('Failed test. Clock problem hour is invalid. Error 2.');
     } else {
-        console.log('Passed clock problem hour test.');
+        //console.log('Passed clock problem hour test.');
     }
 }
 
@@ -42,7 +42,7 @@ function testClockProblemSecondHour(clockProblem){
         console.log('Current value for second hour is ' + clockProblem.secondHour);
         alert('Failed test. Clock problem second hour is invalid. Error 2.');
     } else {
-        console.log('Passed clock problem second hour test.');
+        //console.log('Passed clock problem second hour test.');
     }
 }
 
@@ -52,7 +52,7 @@ function testClockProblemMinute(clockProblem){
         console.log('Current value for minute is ' + clockProblem.minute);
         alert('Failed test. Clock problem minute is invalid. Error 3.');
     } else {
-        console.log('Passed clock problem minute test.');
+        //console.log('Passed clock problem minute test.');
     }
 }
 
@@ -62,7 +62,7 @@ function testClockProblemSecondMinute(clockProblem){
         console.log('Current value for second minute is ' + clockProblem.secondMinute);
         alert('Failed test. Clock problem second minute is invalid. Error 3.');
     } else {
-        console.log('Passed clock problem second minute test.');
+        //console.log('Passed clock problem second minute test.');
     }
 }
 
@@ -77,12 +77,12 @@ function  testClockProblemCorrectAnswerPosition(clockProblem){
 //test clock problem hour for 13
 function testClockProblemHourForThirteen(clockProblem){
     if ((clockProblem.hour == undefined) || (clockProblem.hour < 1) || (clockProblem.hour > 12)) {
-        console.log('Error Encountered. Clock hour problem encountered.');
+        alert('Error Encountered. Clock hour problem encountered.');
         console.log('Current value for hour is ' + clockProblem.hour);
         console.log('Minute is ' + clockProblem.minute);
         console.log('Slang is ' + clockProblem.slangTerm);
         
     } else {
-        console.log('Passed clock problem hour test.');
+        //console.log('Passed clock problem hour test.');
     }
 }
