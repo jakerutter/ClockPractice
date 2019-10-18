@@ -20,7 +20,7 @@
         and 4 digital clocks for choosing the answer -->
         <div id="guessTime" class="hidden">
             <canvas id="clockQuestion" class="analogClockQuestion"></canvas>
-            <h4 id="guessTimeText" class="questionText"></h4>
+            <h2 id="guessTimeText" class="questionText"></h2>
             <div>
                 <button id="guess1" class="digitalClockButton" onclick="checkAnswer('1', 'guess');"><h1 id="guessCanvas1" class="digitalClock"></h1></button>
                 <button id="guess2" class="digitalClockButton" onclick="checkAnswer('2', 'guess');"><h1 id="guessCanvas2" class="digitalClock"></h1></button>
@@ -30,7 +30,7 @@
         </div>
         <!-- This div should have 4 analog clocks as answer options -->
         <div id="pickClock" class="hidden">
-            <h4 id="pickClockText" class="questionText"></h4>
+            <h2 id="pickClockText" class="questionText"></h2>
             <div class="">
                 <div>
                     <button id="pick1" class="analogClockButton" onclick="checkAnswer('1', 'pick');"><span><canvas id="pickCanvas1" class="analogClock"></canvas></span></button>
@@ -48,7 +48,7 @@
         and 4 times written in text for choosing the answer -->
         <div id="guessText" class="hidden">
                 <canvas id="clockQuestion2" class="analogClockQuestion"></canvas>
-                <h4 id="guessTextText" class="questionText"></h4>
+                <h2 id="guessTextText" class="questionText"></h2>
                 <div>
                     <button class="digitalClockButton" onclick="checkAnswer('1', 'text');"><span class="buttonH1" id="text1"></h1></button>
                     <button class="digitalClockButton" onclick="checkAnswer('2', 'text');"><span class="buttonH1" id="text2"></h1></button>
@@ -58,13 +58,26 @@
         </div>
          <!-- This div should have a text question and an input for an answer -->
         <div id="triviaSection" class="hidden">
-            <h2 id="triviaQuestion" class="questionText"></h4>
+            <h2 id="triviaQuestion" class="questionText"></h2>
             <div class="spacer"></div>
             <div>
                 <input type="number" id="triviaInput"/>
                 <button type="button" class="settingsButton" onclick="submitTriviaAnswer();">Submit</button>
             </div>
-    </div>
+        </div>
+          <!-- This div should have a text question and an input for an answer -->
+          <div id="timeDiffSection" class="hidden">
+            <h2 id="triviaQuestion" class="questionText">What is the time difference?</h2>
+            <h4>Find the amount of time from the earlier time to the later time.</h4>
+            <div class="spacer">
+                <h1 id="timeDiff1" class="digitalClock"></h1>
+                <h1 id="timeDiff2" class="digitalClock"></h1>
+            </div>
+            <div>
+                <input type="number" id="timeDiffInput"/>
+                <button type="button" class="settingsButton" onclick="submitTimeDiffInput();">Submit</button>
+            </div>
+        </div>
 		 <button id="letsPracticeBtn" class="settingsButton" onclick="getClockProblem();">Let's Practice!</button>
         <h2 id="resultsLabel" class="headTitle"></h2>
         
