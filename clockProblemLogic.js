@@ -170,14 +170,14 @@ function getClockQuestionText(clockProblem){
 
         } else if (clockProblem.minute > 30 && clockProblem.minute != 45){
 
-            if (clockProblem.hour != 12){
+            // if (clockProblem.hour != 12){
 
-            questionText += clockProblem.slangTerm + " " + Number(clockProblem.hour+1) + "?";
+            questionText += clockProblem.slangTerm + " " + getHourPlusOne(clockProblem.hour) + "?";
 
-            } else {
+            // } else {
 
-                questionText += clockProblem.slangTerm + " 1?";
-            }
+            //     questionText += clockProblem.slangTerm + " 1?";
+            // }
 
         } else if (clockProblem.minute != 45){
 
@@ -185,14 +185,14 @@ function getClockQuestionText(clockProblem){
 
         } else if (clockProblem.minute == 45){
 
-            if (clockProblem.hour != 12){
+            // if (clockProblem.hour != 12){
 
-                questionText += clockProblem.slangTerm + " " + Number(clockProblem.hour+1) + "?";
+                questionText += clockProblem.slangTerm + " " + getHourPlusOne(clockProblem.hour) + "?";
 
-            } else {
+            // } else {
 
-                questionText += clockProblem.slangTerm + " 1?";
-            }
+            //     questionText += clockProblem.slangTerm + " 1?";
+            // }
         }
 
         clockProblem.question = questionText;
@@ -305,8 +305,8 @@ function drawAnalogClocks(clockProblem){
         getAnalogClock('pickCanvas'+clockProblem.correctPosition, clockProblem.hour, clockProblem.minute);
         //Cranking up the difficulty. Purposefully spoofing answers closer to the actual answer
         getAnalogClock('pickCanvas'+clockProblem.notAnswerArray[0], clockProblem.hour, getRandomMinuteWithException(clockProblem.minute));
-        getAnalogClock('pickCanvas'+clockProblem.notAnswerArray[1], clockProblem.hour+1, getMinute());
-        getAnalogClock('pickCanvas'+clockProblem.notAnswerArray[2], clockProblem.hour-1, getMinute());
+        getAnalogClock('pickCanvas'+clockProblem.notAnswerArray[1], getHourPlusOne(clockProblem.hour), getMinute());
+        getAnalogClock('pickCanvas'+clockProblem.notAnswerArray[2], getHourMinusOne(clockProblem.hour), getMinute());
     } else {
         //need 1 analog clock for question clock. 4 text times for answers
         getAnalogClock("clockQuestion2", clockProblem.hour, clockProblem.minute);
@@ -318,8 +318,8 @@ function drawDigitalClocks(clockProblem){
     getDigitalClock('guessCanvas'+clockProblem.correctPosition, clockProblem.hour, clockProblem.minute);
     //Cranking up the difficulty. Purposefully spoofing answers closer to the actual answer
     getDigitalClock('guessCanvas'+clockProblem.notAnswerArray[0], clockProblem.hour, getRandomMinuteWithException(clockProblem.minute));
-    getDigitalClock('guessCanvas'+clockProblem.notAnswerArray[1], clockProblem.hour+1, getMinute());
-    getDigitalClock('guessCanvas'+clockProblem.notAnswerArray[2], clockProblem.hour-1, getMinute());
+    getDigitalClock('guessCanvas'+clockProblem.notAnswerArray[1], getHourPlusOne(clockProblem.hour), getMinute());
+    getDigitalClock('guessCanvas'+clockProblem.notAnswerArray[2], getHourMinusOne(clockProblem.hour), getMinute());
 }
 
 function clearUI(){
@@ -439,12 +439,12 @@ function getCorrectAnswerText(clockProblem){
 
 function getTextForWrongAnswers(clockProblem, value){
     var answerText;
-    var hours = [clockProblem.hour, clockProblem.hour+1, clockProblem.hour-1];
+    var hours = [clockProblem.hour, getHourPlusOne(clockProblem.hour), getHourMinusOne(clockProblem.hour)];
     //going to allow the same hour but enforce different minutes
 
     var hour = getHourInEnglish(hours[value]);
     var minute;
-    value == 0 ? minute = getRandomMinuteInEnglishWithException(clockProblem.minute) : getMinuteInEnglish(clockProblem.minute);
+    minute = value == 0 ? minute = getRandomMinuteInEnglishWithException(clockProblem.minute) : getMinuteInEnglish(clockProblem.minute);
     // var minute = getRandomMinuteInEnglishWithException(clockProblem.minute);
     answerText = hour + " " + minute;
 
@@ -549,3 +549,16 @@ function getRandomMinuteInEnglishWithException(minute){
     return minuteText;
 }
 
+function getHourPlusOne(hour){
+    // if hour is 11 or fewer, return hour plus one
+    // if hour is 12, return 1
+    hour = hour <= 11 ? hour +=1 : 1;
+    return hour;
+}
+
+function getHourMinusOne(hour){
+    // if hour is 2 or greater, return hour minus one
+    // if hour is 1, return 12
+    hour = hour >= 2 ? hour -= 1 : 12;
+    return hour;
+}
