@@ -67,18 +67,23 @@
         </div>
           <!-- This div should have a text question and an input for an answer -->
           <div id="timeDiffSection" class="hidden">
-            <h2 id="triviaQuestion" class="questionText">What is the time difference?</h2>
+            <h2 id="timeDiffQuestion" class="questionText"></h2>
             <h4>Find the amount of time from the earlier time to the later time.</h4>
-            <div class="spacer">
+            <div style="display:inline-flex;">
                 <h1 id="timeDiff1" class="digitalClock"></h1>
+                <h1 style="width:100px;">and</h1>
                 <h1 id="timeDiff2" class="digitalClock"></h1>
             </div>
             <div>
-                <input type="number" id="timeDiffInput"/>
+                <label>Hours</label>
+                <input type="number" id="timeDiffHours" />
+                <label>Minutes</label>
+                <input type="number" id="timeDiffMinutes" />
                 <button type="button" class="settingsButton" onclick="submitTimeDiffInput();">Submit</button>
             </div>
         </div>
-		 <button id="letsPracticeBtn" class="settingsButton" onclick="getClockProblem();">Let's Practice!</button>
+
+		<button id="letsPracticeBtn" class="settingsButton" onclick="getClockProblem();">Let's Practice!</button>
         <h2 id="resultsLabel" class="headTitle"></h2>
         
     </div>
